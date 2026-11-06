@@ -142,6 +142,33 @@ Na dúvida: se a pessoa abre a tela para **decidir onde agir**, cabe big number;
 - Ícone cujo destino não é óbvio usa ícone que sinaliza: `ArrowUpRight` (vai para outra tela), `ExternalLink` (sai do app), `Download`.
 
 
+### Tela de login (meio a meio)
+
+Login é a primeira impressão da marca: **não use formulário solto no meio de uma tela vazia.** Padrão único para todos os apps, pronto em `code/LoginSplit.tsx`:
+
+```
+┌───────────────────────────┬───────────────────────────┐
+│                           │                           │
+│   FOTO OFICIAL            │     Nome do produto       │
+│   (metade esquerda,       │     Entrar                │
+│    sangrada, sem raio)    │     [Entrar com Microsoft]│
+│                           │     ─── ou com e-mail ─── │
+│                           │     E-mail                │
+│  logotipo off-white       │     Senha   Esqueci a senha│
+│  Frase curta da marca.    │     [ Entrar ]            │
+└───────────────────────────┴───────────────────────────┘
+       fundo da foto                fundo creme
+```
+
+- **Desktop (≥ 1024px):** duas colunas iguais. Esquerda = imagem; direita = formulário em fundo `rg-creme`, coluna de no máximo 384px centralizada.
+- **Mobile/tablet (< 1024px):** a imagem some; fica o formulário com o logotipo verde em cima.
+- **Imagem:** só fotos aprovadas pela Comunicação e Marketing (biblioteca a ser definida por eles; até lá, peça a imagem à pessoa). Verde saturado, luz quente, nunca P&B. `object-fit: cover`, `alt=""` (decorativa), `loading="lazy"`: o formulário aparece antes da foto. **Nunca** foto de banco de imagens, imagem gerada por IA nem ilustração genérica.
+- **Sem imagem aprovada:** a metade esquerda fica em **Verde Mata chapado** com o logotipo off-white e a frase — já é uma tela de marca completa. Não deixe a metade vazia nem centralize o formulário sozinho.
+- **Sobre a foto:** logotipo off-white (32px de altura) e, opcional, **uma frase curta da marca** (até 8 palavras, 24px SemiBold, creme) no canto inferior esquerdo, com proteção `linear-gradient(to top, rgba(0,37,13,.72), transparent 55%)` só embaixo. Nada de caixa sólida atrás do texto.
+- **Formulário:** eyebrow com o nome do produto, título "Entrar" (24px Bold), botão "Entrar com a conta Microsoft da re.green" quando houver SSO (é o caminho principal), divisor "ou com e-mail", campos com rótulo acima, "Esqueci a senha" como link discreto, botão primário de largura total, uma linha de rodapé sobre acesso restrito.
+- **Erros** em tag `crit` acima do botão, dizendo o que fazer ("E-mail ou senha incorretos. Confira e tente de novo."). Nunca revele se o e-mail existe.
+- **Sem** sidebar, barra do topo, links de navegação, rodapé com mapa do site ou animação de fundo.
+
 ## 13. Ícones e imagem
 
 - **Ícones de interface: `lucide-react`**, `strokeWidth={1.75}`, 16px inline e em botão, 20px na sidebar e em cabeçalho. Cor herdada do texto (`currentColor`).

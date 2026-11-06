@@ -17,8 +17,10 @@ Para atualizar, publique uma nova versão aqui e reinstale pela mesma URL.
 | `code/tokens.css` | Fonte, paleta, tokens, rolagem e variáveis do shadcn/ui |
 | `code/tailwind.preset.ts` | Preset do Tailwind 3 (escala de tipo, cores, raios, sombras, animações) |
 | `code/format.ts` | Formatação pt-BR (área, moeda, %, datas, mediana/P90, nome + código) |
-| `code/brand-assets.ts` | Logotipo e ícones da marca como texto (data URIs), para projetos sem arquivos binários |
-| `assets/` | Logotipo (verde e Solar) e os 7 ícones ilustrativos da marca |
+| `code/Logo.tsx` | Logotipo oficial como componente React (vetor embutido) |
+| `code/LoginSplit.tsx` | Tela de login meio a meio (imagem + formulário) |
+| `code/brand-assets.ts` | Logotipo e ícones como data URIs, para quando precisar de uma URL |
+| `assets/` | Logotipo oficial em SVG (verde e off-white) e os 7 ícones ilustrativos da marca |
 | `examples/design-system.html` | Guia vivo: tokens e componentes funcionando, com um quadro kanban de exemplo |
 
 Abra `examples/design-system.html` direto no navegador; ele precisa da pasta `assets/` ao lado.

@@ -4,11 +4,17 @@
 ## 2. Marca na interface
 
 - O nome é sempre **re.green**: minúsculo, com o ponto. Nunca "ReGreen", "Regreen" ou "RE.GREEN". Em texto corrido: "a re.green".
-- **Logotipo:** só o oficial — verde em fundo claro, Solar em fundo escuro. Largura mínima de 96px. Não recrie, recorte, recolora nem crie símbolo/monograma, e **nunca escreva "re.green" em texto no lugar do logotipo**. Aparece na barra do topo ou na sidebar e no login, em nenhum outro lugar.
-- **De onde tirar os arquivos, nesta ordem:**
-  1. **`code/brand-assets.ts`** — logotipo (`LOGO_VERDE`, `LOGO_SOLAR`) e os 7 ícones (`ICONES`) como *data URIs* em texto. Funciona em qualquer projeto, inclusive quando não é possível copiar arquivos binários (Skip, Maestro, protótipos): copie o arquivo para `src/regreen/` e use `<img src={LOGO_VERDE} alt="re.green" />`.
-  2. `assets/` deste repositório — os mesmos arquivos em PNG/SVG, quando o projeto aceita binários (`public/`).
-  3. **Originais em alta resolução** e Brandbook: SharePoint, site *Intranet re.green* › Documentos Compartilhados › Relações Institucionais › Comunicação e Marketing › **LOGO** (fontes licenciadas na pasta **Fontes**, ao lado). Use se tiver acesso ao SharePoint e precisar de outro formato.
+- **Logotipo:** só o oficial — verde (`#003714`) em fundo claro, off-white (`#FCF2EB`) sobre Verde Mata ou foto escura. Altura de 24px na barra/sidebar, 32–40px no login; largura mínima de 96px. Não recrie, redesenhe, recorte, recolora nem crie símbolo/monograma. Aparece na barra do topo ou na sidebar e no login, em nenhum outro lugar.
+- **Proibido substituir o logotipo** por "re.green" escrito em texto, wordmark montado com fonte, imagem genérica ou placeholder. Isso **não é um "desvio aceitável"**: se nenhuma das fontes abaixo funcionar, pare e peça o arquivo à pessoa.
+- **Como colocar o logotipo, nesta ordem:**
+  1. **`code/Logo.tsx`** (padrão) — componente React com o **vetor oficial embutido** (é código, não imagem; não precisa de arquivo em `public/`, SharePoint nem internet). Copie para `src/regreen/Logo.tsx` e use `<Logo className="h-6 w-auto" />` ou `<Logo variant="offwhite" … />`.
+  2. **`code/brand-assets.ts`** — o mesmo vetor como *data URI* (`LOGO_VERDE`, `LOGO_OFFWHITE`) para quando precisar de uma URL (`<img src>`, CSS, e-mail). Também traz os 7 ícones da marca (`ICONES`).
+  3. **`assets/logo/regreen-logo-verde.svg` e `regreen-logo-offwhite.svg`** — os arquivos SVG, para projetos que aceitam colocar arquivos em `public/`.
+  4. **SharePoint (originais e outros formatos)** — se tiver o conector do SharePoint/OneDrive e precisar de PNG, EPS ou AI:
+     - site **Public** › Documentos Partilhados › Materiais para Colaboradores › **Logos e ícones da marca** › Logotipo › **LOGOTIPO RGB** › `SVG` ou `PNG` (aberto a todos os colaboradores);
+     - ou site **Intranet re.green** › Documentos Compartilhados › Relações Institucionais › Comunicação e Marketing › **LOGO** › LOGOTIPO RGB (com o Brandbook);
+     - arquivos para tela: `REGREEN_RGB_01 RG POS VERDE` (fundo claro) e `REGREEN_RGB_02 RG NEG OFFWHITE` (fundo escuro). As versões `PB RESTRITO` (preto e branco) não são para interface; CMYK e Pantone são para impressão.
+     - Busque por `REGREEN_RGB_01` se o caminho mudar. Baixe o arquivo e coloque em `public/brand/`.
 - **Voz na UI:** português do Brasil, frases curtas, verbos de ação, sentence case. Interface fala com quem usa: **"você"** em instruções e mensagens ("Você não tem acesso a este módulo"); **"nós"** só em textos institucionais.
 - **Sem emoji e sem dingbat unicode** em interface (✓ ✗ ⚠ → ★ etc.). Use ícones (§13).
 - **Caixa alta** só em eyebrows (rótulo de seção) e cabeçalho de tabela. Nunca em título, botão ou mensagem.

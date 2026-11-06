@@ -35,7 +35,7 @@
 - **App de uma tela não tem navegação principal** (§4): só a barra do topo com logotipo e nome.
 - **Com duas ou mais telas, navegação principal em sidebar colapsável** (shadcn `Sidebar`), nunca abas no topo.
   - Fundo `rg-creme`, fio `rg-hairline` à direita. **Não** use Verde Mata como fundo de sidebar.
-  - Logotipo verde no topo (altura 24px, de `code/brand-assets.ts` se o projeto não tiver o arquivo), nome do produto ao lado em 14px SemiBold `rg-ink`, separado por fio vertical.
+  - Logotipo verde no topo (`<Logo className="h-6 w-auto" />`, altura 24px), nome do produto ao lado em 14px SemiBold `rg-ink`, separado por fio vertical.
   - Item: altura 40px, raio 12px, peso 500, ícone Lucide 20px + rótulo 14px em `rg-ink-muted`. Hover: fundo `rg-creme-600`, texto `rg-ink`.
   - Item ativo: **chip branco** com `shadow-card`, texto `rg-mata` SemiBold, **barra de 3px `rg-mudas` à esquerda**, `aria-current="page"`.
   - Grupos com eyebrow (12px, caixa alta, `rg-ink-muted`).
