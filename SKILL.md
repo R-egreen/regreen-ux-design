@@ -3,7 +3,7 @@ name: regreen-design
 description: Padrão de marca e diretrizes de design para interfaces web internas da re.green (React + Tailwind + shadcn/ui, apps no Skip e similares). Use ao criar, revisar ou refatorar qualquer tela, componente, tabela, gráfico, formulário, quadro kanban ou dashboard de um produto da re.green.
 ---
 
-# Design de interfaces — re.green (v1.2)
+# Design de interfaces — re.green (v1.3)
 
 Fonte da verdade para interfaces web internas da re.green. Une a marca com regras de usabilidade para produtos de dados. Cada regra é curta e verificável.
 
@@ -11,13 +11,15 @@ Fonte da verdade para interfaces web internas da re.green. Une a marca com regra
 
 ## Como aplicar (instruções para a IA)
 
-1. **Antes de escrever código de tela**, confirme que o projeto tem `src/regreen/tokens.css`, `tailwind.preset.ts` e `format.ts`. Se não tiver, instale a partir de `code/` seguindo `references/instalacao.md`.
-2. **Leia a referência do assunto antes de decidir** (mapa abaixo). Este arquivo traz só o essencial.
-3. **Use só tokens.** Nada de hex solto, `text-[13px]`, `bg-green-600`, `rounded-[7px]`, `shadow-md`. Se o token não existe, não use.
-4. **Use os componentes de `src/components/ui/` (shadcn)** e ajuste via variáveis, não com `!important`.
-5. **Toda exibição de número ou data passa por `code/format.ts`.**
-6. **Ao terminar, rode o checklist do §17** e corrija o que falhar antes de entregar.
-7. Em dúvida visual, consulte `examples/design-system.html` (guia vivo).
+1. **Antes de escrever código de tela**, confirme que o projeto tem `src/regreen/tokens.css`, `tailwind.preset.ts`, `format.ts` e `brand-assets.ts`. Se não tiver, copie de `code/` seguindo `references/instalacao.md`.
+2. **Logotipo e ícones da marca vêm de `code/brand-assets.ts`** (texto, funciona sem arquivos binários). Nunca troque o logotipo por "re.green" escrito em texto. Originais no SharePoint: `references/marca-e-cor.md` §2.
+3. **Dimensione a estrutura pelo app:** uma tela → barra do topo simples, sem sidebar; duas ou mais telas → sidebar. Big numbers só em telas de acompanhamento (painel, visão geral), nunca em quadro, lista de trabalho, formulário ou detalhe.
+4. **Leia a referência do assunto antes de decidir** (mapa abaixo). Este arquivo traz só o essencial.
+5. **Use só tokens.** Nada de hex solto, `text-[13px]`, `bg-green-600`, `rounded-[7px]`, `shadow-md`. Se o token não existe, não use.
+6. **Use os componentes de `src/components/ui/` (shadcn)** e ajuste via variáveis, não com `!important`.
+7. **Toda exibição de número ou data passa por `code/format.ts`.**
+8. **Ao terminar, rode o checklist do §17** e corrija o que falhar antes de entregar.
+9. Em dúvida visual, consulte `examples/design-system.html` (guia vivo).
 
 ## Mapa das referências
 
@@ -56,7 +58,7 @@ Fonte da verdade para interfaces web internas da re.green. Une a marca com regra
 
 **Forma:** botões, tags e chips em pílula · contêiner 16px · card 14px · campo 12px · bloco interno 10px. Sombras verdes difusas: `sm` (botão), `card` (card/painel), `raised` (hover, sobe 1px), `overlay` (drawer/modal/toast). Nunca sombra preta.
 
-**Densidade:** card de quadro com nome + código, 1 linha de contexto, 1 bloco de progresso e até 2 sinais de exceção. KPI com eyebrow, número e 1 linha.
+**Densidade:** card de quadro com nome + código, 1 linha de contexto, 1 bloco de progresso e até 2 sinais de exceção. KPI com eyebrow, número e 1 linha. **Big numbers só em painel/visão geral**; em telas operacionais o resumo cabe numa linha de contexto.
 
 **Rolagem:** em telas de trabalho a página fica parada; o quadro rola na horizontal e cada raia na vertical. Barra fina global; `.scroll-quiet` em listas internas.
 
@@ -64,13 +66,14 @@ Fonte da verdade para interfaces web internas da re.green. Une a marca com regra
 
 **Dados:** padrão brasileiro (2.342,80 ha · R$ 1.000,00 · 27,8% · 05/11/2026), unidade visível, mediana e P90 com n para durações, entidade sempre "Nome (CÓDIGO)", todo total diz o que conta.
 
-**Navegação:** sidebar creme colapsável, nunca abas no topo; menu do avatar só com itens de conta; uma entidade, uma página; painéis fecham por X e Esc.
+**Navegação:** app de uma tela = barra do topo com logotipo e nome, sem sidebar; com duas ou mais telas, sidebar creme colapsável, nunca abas no topo; menu do avatar só com itens de conta; uma entidade, uma página; painéis fecham por X e Esc.
 
 ## 17. Checklist de revisão (rode antes de entregar)
 
 **Marca**
-- [ ] "re.green" escrito certo; logotipo só dos PNGs oficiais
-- [ ] Sidebar creme, área de trabalho verde-gelo, cards brancos com `shadow-card`
+- [ ] "re.green" escrito certo; logotipo oficial (de `brand-assets.ts`), nunca escrito em texto
+- [ ] Área de trabalho verde-gelo, cards brancos com `shadow-card`; sidebar creme **só se o app tiver duas ou mais telas**
+- [ ] Big numbers só se a tela for de acompanhamento (painel, visão geral)
 - [ ] Texto e títulos em tinta neutra; Verde Mata só nos lugares da lista do §3.1
 - [ ] Uma família de fonte na UI (§3.3); títulos em Bold, sem Sharp Grotesk na interface
 - [ ] Nenhum hex solto, nenhuma sombra fora da escala, nenhum gradiente, emoji ou dingbat
@@ -140,6 +143,9 @@ Fonte da verdade para interfaces web internas da re.green. Une a marca com regra
 | Ícone de outra biblioteca, emoji, ✓ ⚠ → | Lucide 1,75 |
 | Regenerar com IA sobrescrevendo | Nova versão com aviso |
 | Fundo em cor de apoio ou quarto tom de fundo | Creme (moldura) + verde-gelo (trabalho) + branco (cards) |
+| Sidebar num app de uma tela só | Barra do topo com logotipo e nome |
+| Big numbers em quadro, lista de trabalho ou formulário | Resumo numa linha de contexto; big numbers só em painel |
+| "re.green" escrito em texto no lugar do logotipo | `LOGO_VERDE` de `code/brand-assets.ts` |
 
 ---
 

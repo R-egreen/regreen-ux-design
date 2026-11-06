@@ -4,7 +4,7 @@
 ## 16. Instalação em projeto Skip (React + Vite + Tailwind 3 + shadcn)
 
 1. A fonte de UI (Figtree) já é carregada pelo Google Fonts dentro de `tokens.css`. A Sharp Grotesk é licenciada e não está neste repositório; se um título de login precisar dela, peça os arquivos à Comunicação e Marketing.
-2. Copie `code/tokens.css`, `code/tailwind.preset.ts` e `code/format.ts` para `src/regreen/`.
+2. Copie `code/tokens.css`, `code/tailwind.preset.ts`, `code/format.ts` e `code/brand-assets.ts` para `src/regreen/`. O `brand-assets.ts` traz o logotipo e os ícones em texto, então funciona mesmo onde não dá para copiar imagens.
 3. Em `src/main.css`:
    - remova o `@import url('https://fonts.googleapis.com/...')`;
    - adicione na **primeira linha** `@import './regreen/tokens.css';`;

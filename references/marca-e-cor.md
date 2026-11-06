@@ -4,7 +4,11 @@
 ## 2. Marca na interface
 
 - O nome é sempre **re.green**: minúsculo, com o ponto. Nunca "ReGreen", "Regreen" ou "RE.GREEN". Em texto corrido: "a re.green".
-- **Logotipo:** use só os PNGs de `assets/logo/` — verde em fundo claro, Solar em fundo escuro. Largura mínima de 96px. Não recrie, recorte, recolora nem crie símbolo/monograma. Aparece no topo da sidebar e no login, em nenhum outro lugar.
+- **Logotipo:** só o oficial — verde em fundo claro, Solar em fundo escuro. Largura mínima de 96px. Não recrie, recorte, recolora nem crie símbolo/monograma, e **nunca escreva "re.green" em texto no lugar do logotipo**. Aparece na barra do topo ou na sidebar e no login, em nenhum outro lugar.
+- **De onde tirar os arquivos, nesta ordem:**
+  1. **`code/brand-assets.ts`** — logotipo (`LOGO_VERDE`, `LOGO_SOLAR`) e os 7 ícones (`ICONES`) como *data URIs* em texto. Funciona em qualquer projeto, inclusive quando não é possível copiar arquivos binários (Skip, Maestro, protótipos): copie o arquivo para `src/regreen/` e use `<img src={LOGO_VERDE} alt="re.green" />`.
+  2. `assets/` deste repositório — os mesmos arquivos em PNG/SVG, quando o projeto aceita binários (`public/`).
+  3. **Originais em alta resolução** e Brandbook: SharePoint, site *Intranet re.green* › Documentos Compartilhados › Relações Institucionais › Comunicação e Marketing › **LOGO** (fontes licenciadas na pasta **Fontes**, ao lado). Use se tiver acesso ao SharePoint e precisar de outro formato.
 - **Voz na UI:** português do Brasil, frases curtas, verbos de ação, sentence case. Interface fala com quem usa: **"você"** em instruções e mensagens ("Você não tem acesso a este módulo"); **"nós"** só em textos institucionais.
 - **Sem emoji e sem dingbat unicode** em interface (✓ ✗ ⚠ → ★ etc.). Use ícones (§13).
 - **Caixa alta** só em eyebrows (rótulo de seção) e cabeçalho de tabela. Nunca em título, botão ou mensagem.

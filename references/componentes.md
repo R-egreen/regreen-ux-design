@@ -76,8 +76,20 @@ Base: shadcn/ui em `src/components/ui/`. As regras abaixo são como configurá-l
 - **Card de quadro:** raio 14px, padding 14–16px, segue o orçamento do §7.2 e a regra de exceção do §7.1. Escritório/responsável como avatar de iniciais no canto, com tooltip.
 - **Mover card:** por arrastar (§3.6) **e** por um seletor de etapa no drawer, com "Salvando… / Salvo", toast com Desfazer e destaque do card na nova raia.
 
-### Indicador (KPI)
+### Indicador (KPI, big numbers)
 
+**Quando usar.** Big numbers são para telas cujo trabalho é **acompanhar indicadores**: painel, visão geral, relatório, home de módulo. Em telas **operacionais** a pessoa trabalha item a item, e números grandes só roubam espaço e atenção.
+
+| Tela | Big numbers? | No lugar |
+|---|---|---|
+| Painel, dashboard, visão geral, relatório | Sim, 3 a 6 | — |
+| Quadro kanban, lista/tabela de trabalho, fila, caixa de entrada | **Não** | Contagem na linha de contexto do cabeçalho ("23 terras · 8 acima do prazo") e nos cabeçalhos das raias; "acima do prazo" pode virar chip de filtro |
+| Página de uma entidade (terra, contrato) | Não, em regra | Campos-chave no cabeçalho da entidade; métricas só se forem a razão da página |
+| Formulário, configuração, assistente | Não | — |
+
+Na dúvida: se a pessoa abre a tela para **decidir onde agir**, cabe big number; se abre para **agir**, não cabe.
+
+**Como fazer:**
 - Card branco (raio 16px, `shadow-card`). Eyebrow em cima (`rg-eyebrow`), número 32px SemiBold **em `rg-mata`** (um dos poucos lugares da cor), unidade em 14px `rg-ink-muted` ao lado, 1 linha de contexto em 12px `rg-ink-muted`.
 - KPI clicável: ícone `ArrowUpRight` discreto no canto; hover sobe 1px + `shadow-raised`; filtro ativo: contorno 1px `rg-mata` + `aria-pressed="true"`.
 - Variação: "+4,2% vs. out/2026" em 12px, com ícone de seta e cor de status **só se houver referência** (meta, orçamento).

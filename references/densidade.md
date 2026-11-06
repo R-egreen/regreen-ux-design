@@ -33,5 +33,7 @@
 - **Densidade ajustável** em telas de alto volume (quadros, listas, tabelas): modo **Compacto** (linha de 40px) e **Confortável** (linha de 48px), lembrado por usuário. Compacto tira repetição, não tira dado.
 - **Divulgação progressiva:** o resumo fica visível; o detalhe abre sob demanda (expandir, drawer), sem trocar de tela.
 - **Remova o que não ajuda a decidir:** campo que repete o cabeçalho, ícone decorativo por campo, bloco vazio.
+- **Big numbers só em telas de acompanhamento** (painel, visão geral, relatório). Em telas operacionais (quadro, lista de trabalho, formulário, detalhe) o resumo vai numa linha de contexto. Tabela de decisão em `componentes.md` › Indicador.
+- **Estrutura proporcional ao app:** app de uma tela não tem sidebar (§4).
 
 
