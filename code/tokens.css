@@ -1,0 +1,261 @@
+/* re.green — tokens de interface (v1.2)
+   Fonte da verdade para apps web internos. Ver design.md.
+   Uso no template Skip: copie para src/regreen/tokens.css e, em src/main.css,
+   troque o @import de fontes e o bloco :root do @layer base por:
+     @import './regreen/tokens.css';
+   (o @import precisa ser a primeira linha do arquivo). */
+
+/* ---------- Fonte de UI: Figtree (design.md §3.3) ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap');
+
+/* Sharp Grotesk: só peças de marca (login). Licenciada, não vai no repositório: peça os arquivos à Comunicação e Marketing e coloque em public/fonts/. */
+@font-face {
+  font-family: 'Sharp Grotesk PE';
+  src: url('/fonts/SharpGroteskPELight-22.woff2') format('woff2'),
+       url('/fonts/SharpGroteskPELight-22.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ---------- Paleta da marca ---------- */
+  --rg-mata: #003714;          /* Verde Mata Atlântica — texto, ação primária, sidebar */
+  --rg-mata-900: #00250d;      /* pressionado */
+  --rg-mata-700: #0d4a24;      /* hover de ação primária, item ativo na sidebar */
+  --rg-mata-80: #335f43;
+  --rg-mata-60: #668772;
+  --rg-mata-40: #99afa1;
+  --rg-mata-20: #ccd7d0;
+  --rg-mata-10: #e6ebe8;
+  --rg-mata-05: #f2f5f4;
+
+  --rg-mudas: #68c153;         /* Verde das Mudas — só preenchimento/destaque, NUNCA texto sobre claro */
+  --rg-mudas-700: #57a844;
+  --rg-mudas-40: #c3e6ba;
+  --rg-mudas-10: #eaf6e6;
+
+  /* Toques de verde em pequenas doses */
+  --rg-eyebrow: #2d6a1f;       /* eyebrow — 6,4:1 em branco */
+  --rg-tonal: #c4e0b9;         /* botão tonal */
+  --rg-tonal-hover: #b3d6a5;
+  --rg-tonal-line: rgba(16, 56, 29, 0.16);
+  --rg-focus-halo: rgba(104, 193, 83, 0.25); /* halo de foco em campos */
+
+  --rg-creme: #fcf2eb;         /* Branco Solar — moldura da marca: sidebar, login, boas-vindas, vazios */
+  --rg-creme-600: #f5eae1;     /* hover sobre creme */
+  --rg-gelo: #f4f8f2;          /* verde-gelo — fundo da área de trabalho */
+  --rg-sunken: #ebf1e8;        /* área rebaixada: trilho de segmentado, bloco dentro de card */
+  --rg-hover: #f2f6f0;         /* hover de linha/item sobre branco */
+  --rg-track: #dce5d8;         /* trilho de barra de progresso */
+  --rg-branco: #ffffff;        /* superfícies: cards, painéis, tabelas, formulários */
+  --rg-linha: #e4d9cf;         /* legado — use --rg-hairline */
+  --rg-hairline: rgba(16, 56, 29, 0.12);       /* fio padrão (divisor, contorno de card) */
+  --rg-hairline-soft: rgba(16, 56, 29, 0.07);  /* fio interno de card/tabela */
+
+  /* Tinta: texto é neutro; Verde Mata é pontual */
+  --rg-ink: #1c2620;           /* texto e títulos — 15,6:1 em branco · 14,5:1 em gelo */
+  --rg-ink-muted: #56665b;     /* texto secundário — ≥ 5,1:1 em branco, gelo, creme e sunken */
+
+  /* Apoio — acentos e séries de gráfico, nunca fundo de página */
+  --rg-azul: #419bdc;
+  --rg-laranja: #df8435;
+  --rg-lavanda: #afa5f5;
+  --rg-amarelo: #f0d23c;
+  --rg-vermelho: #c0392b;      /* reservado a estado crítico */
+
+  /* ---------- Semântica ---------- */
+  --rg-bg-page: var(--rg-gelo);          /* área de trabalho */
+  --rg-bg-chrome: var(--rg-creme);       /* sidebar e telas de marca */
+  --rg-bg-surface: var(--rg-branco);
+  --rg-bg-sunken: var(--rg-sunken);
+  --rg-bg-hover: var(--rg-hover);
+  --rg-bg-selected: var(--rg-mudas-10);
+
+  --rg-text: var(--rg-ink);
+  --rg-text-muted: var(--rg-ink-muted);
+  --rg-text-brand: var(--rg-mata);       /* só: link, item ativo, número de KPI, botão primário */
+  --rg-text-disabled: #7f8e83;           /* só desabilitado/placeholder */
+  --rg-text-on-dark: var(--rg-creme);
+  --rg-text-on-dark-muted: rgba(252, 242, 235, 0.72);
+
+  --rg-border: var(--rg-hairline);
+  --rg-border-soft: var(--rg-hairline-soft);
+  --rg-border-control: #7f8e83;          /* contorno de campo: 3,4:1 em branco (WCAG 1.4.11) */
+  --rg-focus: var(--rg-mata);            /* anel de foco em fundo claro */
+  --rg-focus-on-dark: var(--rg-mudas);   /* anel de foco sobre Verde Mata: 6:1 */
+
+  /* Status: fg = texto/ícone (≥5,8:1 sobre o próprio bg, branco e creme) · bg = fundo da tag · solid = barra/marcador */
+  --rg-ok-fg: #1f6b2b;      --rg-ok-bg: #eaf6e6;      --rg-ok-solid: #68c153;
+  --rg-warn-fg: #7a5600;    --rg-warn-bg: #fdf5d6;    --rg-warn-solid: #f0d23c;
+  --rg-crit-fg: #a82e21;    --rg-crit-bg: #fbeae6;    --rg-crit-solid: #c0392b;
+  --rg-info-fg: #1f5f94;    --rg-info-bg: #e8f2fa;    --rg-info-solid: #419bdc;
+  --rg-neutral-fg: #4a6152; --rg-neutral-bg: #eef1ef; --rg-neutral-solid: #99afa1;
+  --rg-ai-fg: #4b3fa8;      --rg-ai-bg: #efedfd;      --rg-ai-solid: #afa5f5; /* conteúdo gerado/lido por IA */
+
+  /* Séries de gráfico (ordem fixa) */
+  --rg-chart-1: #003714;
+  --rg-chart-2: #68c153;
+  --rg-chart-3: #419bdc;
+  --rg-chart-4: #df8435;
+  --rg-chart-5: #afa5f5;
+  --rg-chart-6: #f0d23c;
+  --rg-chart-other: #ccd7d0;  /* "Outros" / sem categoria */
+  --rg-chart-grid: #e4d9cf;
+  --rg-chart-axis: #4a6152;
+
+  /* ---------- Tipografia ---------- */
+  --rg-font-ui: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif; /* única família da UI */
+  --rg-font-body: var(--rg-font-ui);
+  --rg-font-brand: 'Sharp Grotesk PE', var(--rg-font-ui); /* só login/peças de marca */
+
+  /* ---------- Forma ---------- */
+  --rg-radius-container: 16px; /* painel, KPI, raia, drawer, modal */
+  --rg-radius-card: 14px;      /* card dentro de raia, toast, popover */
+  --rg-radius-control: 12px;   /* campos, selects, item da sidebar, menus */
+  --rg-radius-inner: 10px;     /* bloco rebaixado dentro de card */
+  --rg-radius-pill: 999px;     /* botões, tags, chips, segmentado, busca */
+  --rg-shadow-sm: 0 1px 2px rgba(16, 56, 29, 0.06);                                      /* botão secundário, chip */
+  --rg-shadow-card: 0 1px 2px rgba(16, 56, 29, 0.05), 0 4px 16px rgba(16, 56, 29, 0.05);   /* card, painel, item ativo */
+  --rg-shadow-raised: 0 2px 6px rgba(16, 56, 29, 0.06), 0 10px 28px rgba(16, 56, 29, 0.10); /* hover de card clicável */
+  --rg-shadow-overlay: 0 4px 12px rgba(16, 56, 29, 0.08), 0 20px 48px rgba(16, 56, 29, 0.14); /* popover, modal, drawer, toast */
+
+  /* ---------- Movimento ---------- */
+  --rg-duration-fast: 120ms;   /* cor, borda, fundo */
+  --rg-duration-base: 200ms;   /* elevação, popover, segmentado, accordion */
+  --rg-duration-slow: 350ms;   /* drawer (280), entrada de cards, toast */
+  --rg-stagger: 30ms;          /* escalonamento de entrada, máx. 8 itens */
+  --rg-ease-standard: cubic-bezier(0.2, 0, 0.2, 1);
+  --rg-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---------- Layout ---------- */
+  --rg-sidebar-width: 248px;
+  --rg-sidebar-rail: 64px;
+  --rg-list-width: 304px;
+  --rg-list-rail: 56px;
+  --rg-content-max: 1600px;
+  --rg-header-height: 56px;
+}
+
+/* ---------- Variáveis do shadcn/ui (HSL sem hsl()) ---------- */
+@layer base {
+  :root {
+    --background: 100 30% 96%;         /* verde-gelo #F4F8F2 */
+    --foreground: 144 15% 13%;         /* tinta #1C2620 */
+
+    --card: 0 0% 100%;
+    --card-foreground: 144 15% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 144 15% 13%;
+
+    --primary: 142 100% 11%;           /* Verde Mata — só botão primário e estados de marca */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 100%;            /* botão secundário: branco com fio */
+    --secondary-foreground: 144 15% 13%;
+
+    --muted: 100 24% 93%;              /* sunken #EBF1E8 */
+    --muted-foreground: 139 9% 37%;    /* #56665B */
+
+    --accent: 100 24% 95%;             /* hover de itens de menu/listas */
+    --accent-foreground: 144 15% 13%;
+
+    --destructive: 6 63% 46%;          /* #C0392B */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 144 9% 90%;              /* fio ≈ rgba(16,56,29,.12) sobre branco */
+    --input: 136 6% 53%;               /* contorno de campo #7F8E83 */
+    --ring: 142 100% 11%;
+
+    --radius: 1rem;                    /* 16px: painéis e contêineres. Campos: rounded-xl (12px) */
+
+    --sidebar-background: 25 74% 95%;  /* creme */
+    --sidebar-foreground: 139 9% 37%;  /* itens em tinta secundária */
+    --sidebar-primary: 142 100% 11%;   /* item ativo: texto Verde Mata */
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 27 50% 92%;      /* hover #F5EAE1 */
+    --sidebar-accent-foreground: 144 15% 13%;
+    --sidebar-border: 144 9% 90%;
+    --sidebar-ring: 142 100% 11%;
+
+    --chart-1: 142 100% 11%;
+    --chart-2: 109 47% 54%;
+    --chart-3: 205 69% 56%;
+    --chart-4: 28 73% 54%;
+    --chart-5: 248 80% 80%;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--rg-font-body);
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: var(--rg-bg-page);
+    color: var(--rg-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--rg-mudas-40);
+    color: var(--rg-mata);
+  }
+
+  /* Rolagem fina e discreta (padrão re.green) — design.md §3.7 */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(16, 56, 29, 0.18) transparent;
+  }
+  *::-webkit-scrollbar { width: 10px; height: 10px; }
+  *::-webkit-scrollbar-track { background: transparent; }
+  *::-webkit-scrollbar-thumb {
+    background-color: rgba(16, 56, 29, 0.16);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-thumb:hover { background-color: rgba(16, 56, 29, 0.3); }
+  /* Listas internas (raia, menu, painel): barra aparece só no hover/foco */
+  .scroll-quiet { scrollbar-color: transparent transparent; }
+  .scroll-quiet:hover, .scroll-quiet:focus-within { scrollbar-color: rgba(16, 56, 29, 0.18) transparent; }
+  .scroll-quiet::-webkit-scrollbar-thumb { background-color: transparent; }
+  .scroll-quiet:hover::-webkit-scrollbar-thumb,
+  .scroll-quiet:focus-within::-webkit-scrollbar-thumb { background-color: rgba(16, 56, 29, 0.16); }
+
+  /* Números alinhados em tabelas e métricas */
+  table, .tabular-nums, [data-numeric] {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Foco visível padrão; superfícies Verde Mata (botão bright, login) usam data-surface="dark" */
+  :focus-visible {
+    outline: 2px solid var(--rg-focus);
+    outline-offset: 2px;
+  }
+  [data-surface='dark'] :focus-visible {
+    outline-color: var(--rg-focus-on-dark);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* NEVER REMOVE THIS (exigência do template Skip) */
+  section[aria-label='Notifications alt+T'] {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}

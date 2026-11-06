@@ -1,0 +1,13 @@
+<!-- Parte da skill regreen-design. Índice e regras essenciais em ../SKILL.md -->
+# Origem e decisões
+
+## Anexo — origem e decisões
+
+- **Paleta:** adotada a dos apps (`#003714 / #68C153 / #FCF2EB`), que coincide com o logotipo vetorial e com o arquivo de cores usado nos projetos. O pack do marketing amostrou `#10381D / #6FB157 / #EADFD9` de imagens do manual; esses valores não devem ser usados em interface.
+- **Tons de status, borda de controle e texto secundário** foram derivados para passar WCAG AA; os valores originais da marca continuam como preenchimento (`solid`).
+- **Fontes:** na v1.0/1.1, Sharp Grotesk PE Light (pasta Fontes da intranet) para títulos e Wix Madefor Text para UI. Na v1.2 a Sharp Grotesk saiu da interface (só existe em Light, fica fina e "de apresentação" em tela de trabalho) e a fonte de UI passou a ser **Figtree** (escolhida após comparar Figtree, Plus Jakarta Sans, Wix Madefor e a combinação anterior no protótipo interno). Pode ser revista; trocar a família exige mudar só `--rg-font-ui` e o preset.
+- **Ícones:** a marca define 7 ícones ilustrativos e nenhum utilitário; adotado Lucide em traço fino por coerência com o desenho de linha da marca.
+- **Raios:** pílula (ação, herança da marca) + 12px (controle) + 14–16px (card/contêiner), raios concêntricos.
+- **v1.1 (05/11/2026), após revisão do protótipo interno:** a tela ficou verde demais. Mudanças: texto passou a tinta neutra (`rg-ink`); Verde Mata virou cor pontual com lista fechada; sidebar passou de Verde Mata para creme com item ativo em chip branco; fundo de trabalho passou para verde-gelo (do app interno), com creme reservado à moldura; cards ganharam raio 12px e sombra suave em verde difuso (o pack de marketing pede cards planos, mas em interface a profundidade ajuda a separar camadas); botão secundário, chips e segmentados ficaram neutros. Do app interno **não** foram adotados o `zoom: 0.8` global (reduz texto abaixo de 12px) nem o foco invisível.
+- **v1.2 (05/11/2026), segunda revisão do protótipo interno ("o original está mais bonito"):** fonte única na UI (Figtree) com títulos em Bold; regra de densidade "pouco texto por área de atenção" com exceção-primeiro e orçamento de texto (§7); rolagem no padrão do app interno (página parada, quadro horizontal, raias verticais, barra fina) (§3.7); catálogo de movimento completo, incluindo arrastar, mover e salvar (§3.6); acabamentos do app interno: raio 16px, raias rebaixadas, hover com elevação de 1px, botão tonal verde-claro, eyebrow verde, faixa de etapa em rampa do Verde Mata.
+- Dúvidas ou exceções: registre no projeto e proponha alteração neste documento, em vez de criar regra local.

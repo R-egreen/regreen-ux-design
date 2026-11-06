@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Design System re.green</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap">
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<style>
+/* Guia vivo do design.md v1.2 — sidebar creme (moldura), conteúdo em verde-gelo, cards brancos.
+   Visual único (claro) por decisão: o design system da re.green não tem tema escuro. */
+:root{
+  color-scheme:light;
+  --mata:#003714;--mata-700:#0D4A24;--mata-900:#00250D;--mata-80:#335F43;--mata-60:#668772;--mata-40:#99AFA1;--mata-20:#CCD7D0;--mata-10:#E6EBE8;--mata-05:#F2F5F4;
+  --mudas:#68C153;--mudas-700:#57A844;--mudas-40:#C3E6BA;--mudas-10:#EAF6E6;
+  --eyebrow:#2D6A1F;--tonal:#C4E0B9;--tonal-hover:#B3D6A5;--tonal-line:rgba(16,56,29,.16);
+  --gelo:#F4F8F2;--creme:#FCF2EB;--creme-600:#F5EAE1;--branco:#FFFFFF;--sunken:#EBF1E8;--hover:#F2F6F0;--track:#DCE5D8;
+  --hairline:rgba(16,56,29,.12);--hairline-soft:rgba(16,56,29,.07);
+  --ink:#1C2620;--muted:#56665B;--control:#7F8E83;
+  --azul:#419BDC;--laranja:#DF8435;--lavanda:#AFA5F5;--amarelo:#F0D23C;--vermelho:#C0392B;
+  --ok-fg:#1F6B2B;--ok-bg:#EAF6E6;--ok-solid:#68C153;
+  --warn-fg:#7A5600;--warn-bg:#FDF5D6;--warn-solid:#F0D23C;
+  --crit-fg:#A82E21;--crit-bg:#FBEAE6;--crit-solid:#C0392B;
+  --info-fg:#1F5F94;--info-bg:#E8F2FA;--info-solid:#419BDC;
+  --neutral-fg:#4A6152;--neutral-bg:#EEF1EF;--neutral-solid:#99AFA1;
+  --ai-fg:#4B3FA8;--ai-bg:#EFEDFD;--ai-solid:#AFA5F5;
+  --shadow-sm:0 1px 2px rgba(16,56,29,.06);
+  --shadow-card:0 1px 2px rgba(16,56,29,.05),0 4px 16px rgba(16,56,29,.05);
+  --shadow-raised:0 2px 6px rgba(16,56,29,.06),0 10px 28px rgba(16,56,29,.10);
+  --shadow-overlay:0 4px 12px rgba(16,56,29,.08),0 20px 48px rgba(16,56,29,.14);
+  --ease:cubic-bezier(.2,0,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --font:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--font);font-size:14px;line-height:1.5;color:var(--ink);background:var(--gelo);-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--mata)}
+::selection{background:var(--mudas-40);color:var(--mata)}
+:focus-visible{outline:2px solid var(--mata);outline-offset:2px}
+svg.lucide{width:16px;height:16px;stroke-width:1.75;flex:none}
+.tnum{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono);font-size:12px}
+.eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--eyebrow)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Rolagem (padrão re.green) */
+*{scrollbar-width:thin;scrollbar-color:rgba(16,56,29,.18) transparent}
+*::-webkit-scrollbar{width:10px;height:10px}
+*::-webkit-scrollbar-track{background:transparent}
+*::-webkit-scrollbar-thumb{background-color:rgba(16,56,29,.16);border-radius:999px;border:3px solid transparent;background-clip:content-box}
+*::-webkit-scrollbar-thumb:hover{background-color:rgba(16,56,29,.30)}
+.scroll-quiet{scrollbar-color:transparent transparent}
+.scroll-quiet:hover,.scroll-quiet:focus-within{scrollbar-color:rgba(16,56,29,.18) transparent}
+.scroll-quiet::-webkit-scrollbar-thumb{background-color:transparent}
+.scroll-quiet:hover::-webkit-scrollbar-thumb,.scroll-quiet:focus-within::-webkit-scrollbar-thumb{background-color:rgba(16,56,29,.16)}
+
+/* ---------- Estrutura ---------- */
+.shell{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100vh}
+.side{position:sticky;top:0;height:100vh;background:var(--creme);border-right:1px solid var(--hairline);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.brand{display:flex;align-items:center;gap:12px;padding:20px 20px 16px}
+.brand img{height:24px;width:auto;display:block}
+.brand span{font-size:14px;font-weight:600;padding-left:12px;border-left:1px solid var(--hairline);line-height:1.2}
+.side nav{flex:1;overflow-y:auto;padding:4px 12px 16px}
+.side nav .grp{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:12px 12px 4px}
+.side nav a{position:relative;display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:12px;color:var(--muted);font-weight:500;text-decoration:none;transition:background 120ms var(--ease),color 120ms var(--ease)}
+.side nav a svg.lucide{width:20px;height:20px}
+.side nav a:hover{background:var(--creme-600);color:var(--ink)}
+.side nav a[aria-current=true]{background:#fff;color:var(--mata);font-weight:600;box-shadow:var(--shadow-card)}
+.side nav a[aria-current=true]::before{content:'';position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:0 3px 3px 0;background:var(--mudas)}
+.side .ver{padding:12px 24px 20px;font-size:12px;color:var(--muted);border-top:1px solid var(--hairline)}
+
+main{min-width:0;padding-block:32px 64px;padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+section{display:flex;flex-direction:column;gap:20px;scroll-margin-top:24px}
+.sec-head{display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.sec-head h2{font-size:24px;font-weight:700;letter-spacing:-.015em;line-height:1.2}
+.sec-head p{color:var(--muted)}
+.sec-head .ref{font-size:12px;color:var(--muted)}
+
+.hero{display:flex;flex-direction:column;gap:12px}
+.hero h1{font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.hero p{font-size:16px;color:var(--muted);max-width:62ch}
+.principles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:8px}
+.principle{background:#fff;border:1px solid var(--hairline-soft);border-radius:16px;box-shadow:var(--shadow-card);padding:16px;display:flex;flex-direction:column;gap:6px}
+.principle b{font-size:14px;font-weight:600}
+.principle span{font-size:12px;color:var(--muted)}
+
+.panel{background:#fff;border:1px solid var(--hairline-soft);border-radius:16px;box-shadow:var(--shadow-card);padding:24px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.panel h3{font-size:16px;font-weight:600}
+.panel .note{font-size:12px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+/* ---------- Cor ---------- */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.sw{display:flex;flex-direction:column;border-radius:14px;overflow:hidden;border:1px solid var(--hairline-soft);background:#fff;text-align:left;padding:0;transition:box-shadow 200ms var(--ease-out),transform 200ms var(--ease-out)}
+.sw:hover{box-shadow:var(--shadow-raised);transform:translateY(-1px)}
+.sw .chip{height:64px;border-bottom:1px solid var(--hairline-soft)}
+.sw .meta{padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.sw .meta b{font-size:14px;font-weight:600}
+.sw .meta .mono{color:var(--muted)}
+.sw .meta small{font-size:12px;color:var(--muted)}
+.ratio{display:flex;height:40px;border-radius:12px;overflow:hidden;border:1px solid var(--hairline-soft)}
+.ratio div{display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600}
+.contrast{width:100%;border-collapse:collapse;font-size:14px}
+.contrast th{text-align:left;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--hairline)}
+.contrast td{padding:10px 12px;border-bottom:1px solid var(--hairline-soft);vertical-align:middle}
+.contrast tr:last-child td{border-bottom:0}
+.sample{display:inline-flex;align-items:center;justify-content:center;min-width:120px;height:32px;padding:0 10px;border-radius:10px;font-weight:600;border:1px solid var(--hairline-soft)}
+
+/* ---------- Tipografia ---------- */
+.type-row{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--hairline-soft)}
+.type-row:last-child{border-bottom:0}
+.type-row .spec{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
+.type-row .spec b{color:var(--ink);font-size:14px;font-weight:600}
+
+/* ---------- Forma ---------- */
+.radii{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+.radius{height:88px;background:#fff;border:1px solid var(--hairline);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;color:var(--muted)}
+.radius b{font-size:14px;color:var(--ink)}
+.shadows{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;padding:24px;background:var(--gelo);border-radius:14px}
+.shadow{height:96px;background:#fff;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;color:var(--muted);text-align:center;padding:8px}
+.shadow b{font-size:14px;color:var(--ink)}
+
+/* ---------- Componentes ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 18px;border-radius:999px;font-size:14px;font-weight:600;border:1px solid transparent;white-space:nowrap;transition:background-color 150ms var(--ease),border-color 150ms var(--ease),transform 150ms var(--ease)}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--mata);color:#fff;box-shadow:var(--shadow-sm)}
+.btn-primary:hover{background:var(--mata-700)}
+.btn-tonal{background:var(--tonal);border-color:var(--tonal-line);color:var(--mata);box-shadow:var(--shadow-sm)}
+.btn-tonal:hover{background:var(--tonal-hover)}
+.btn-outline{background:#fff;border-color:var(--hairline);color:var(--ink);box-shadow:var(--shadow-sm)}
+.btn-outline:hover{background:var(--hover);border-color:var(--control)}
+.btn-ghost{background:transparent;color:var(--ink);padding:0 12px}
+.btn-ghost:hover{background:var(--sunken)}
+.btn-danger{background:var(--vermelho);color:#fff}
+.btn[disabled]{background:var(--sunken);color:var(--control);border-color:transparent;box-shadow:none;cursor:not-allowed;transform:none}
+.btn-sm{height:32px;padding:0 12px}
+.icon-btn{width:40px;height:40px;border-radius:999px;border:0;background:none;display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
+.icon-btn:hover{background:var(--sunken)}
+.seg{position:relative;display:inline-flex;border-radius:999px;padding:3px;background:var(--sunken)}
+.seg button{position:relative;z-index:1;height:28px;padding:0 12px;border-radius:999px;border:0;background:none;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:6px;color:var(--muted);transition:color 150ms var(--ease)}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed=true]{color:var(--ink);font-weight:600}
+.seg .thumb{position:absolute;top:3px;bottom:3px;left:0;border-radius:999px;background:#fff;box-shadow:var(--shadow-card);transition:transform 220ms var(--ease-out),width 220ms var(--ease-out)}
+.chip-f{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--hairline);background:#fff;font-size:14px;font-weight:500;color:var(--ink);box-shadow:var(--shadow-sm)}
+.chip-f:hover{border-color:var(--control)}
+.chip-f.active{background:var(--mudas-10);border-color:rgba(104,193,83,.45);color:var(--mata);font-weight:600}
+.chip-f svg.lucide{width:14px;height:14px}
+.tag{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.tag svg.lucide{width:14px;height:14px}
+.tag.ok{background:var(--ok-bg);color:var(--ok-fg)}.tag.warn{background:var(--warn-bg);color:var(--warn-fg)}.tag.crit{background:var(--crit-bg);color:var(--crit-fg)}.tag.info{background:var(--info-bg);color:var(--info-fg)}.tag.neutral{background:var(--neutral-bg);color:var(--neutral-fg)}.tag.ai{background:var(--ai-bg);color:var(--ai-fg)}
+.tag.cat{background:#fff;border:1px solid var(--hairline);color:var(--ink);font-weight:500}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label{font-size:14px;font-weight:600}
+.field label small{font-weight:400;color:var(--muted)}
+.field input,.field select{height:40px;border:1px solid var(--control);border-radius:12px;background:#fff;padding:0 12px;font-size:14px;width:100%;transition:border-color 120ms var(--ease),box-shadow 120ms var(--ease)}
+.field input::placeholder{color:var(--control)}
+.field input:focus,.field select:focus{outline:none;border-color:var(--mata);box-shadow:0 0 0 3px rgba(104,193,83,.25)}
+.field .help{font-size:12px;color:var(--muted)}
+.field.error input{border-color:var(--vermelho)}
+.field.error .help{color:var(--crit-fg);display:flex;align-items:center;gap:6px}
+.field.error .help svg.lucide{width:14px;height:14px}
+.search{position:relative}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.search input{width:100%;height:40px;border:1px solid var(--hairline);border-radius:999px;background:#fff;padding:0 16px 0 40px;font-size:14px;box-shadow:var(--shadow-sm)}
+.search input:focus{outline:none;border-color:var(--mata);box-shadow:0 0 0 3px rgba(104,193,83,.25)}
+.tabs{display:flex;gap:24px;border-bottom:1px solid var(--hairline-soft);overflow-x:auto}
+.tab{height:40px;border:0;background:none;padding:0;font-size:14px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected=true]{color:var(--ink);font-weight:600;border-bottom-color:var(--mata)}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.kpi{position:relative;background:#fff;border:1px solid var(--hairline-soft);border-radius:16px;padding:16px 20px;display:flex;flex-direction:column;gap:2px;text-align:left;box-shadow:var(--shadow-card);transition:box-shadow 200ms var(--ease-out),transform 200ms var(--ease-out),border-color 150ms var(--ease)}
+button.kpi:hover{box-shadow:var(--shadow-raised);transform:translateY(-1px)}
+.kpi .go{position:absolute;top:14px;right:14px;color:var(--muted)}
+.kpi[aria-pressed=true]{border-color:var(--mata);box-shadow:0 0 0 1px var(--mata),var(--shadow-card)}
+.kpi .value{font-weight:600;letter-spacing:-.02em;font-size:32px;line-height:1.2;display:flex;align-items:baseline;gap:6px;color:var(--mata);margin-top:4px}
+.kpi .value small{font-size:14px;color:var(--muted);font-weight:500;letter-spacing:0}
+.kpi .ctx{font-size:12px;color:var(--muted)}
+.table-wrap{overflow-x:auto;border-radius:16px;border:1px solid var(--hairline-soft);box-shadow:var(--shadow-card);background:#fff}
+.dt{width:100%;min-width:680px;border-collapse:separate;border-spacing:0;font-variant-numeric:tabular-nums}
+.dt th{text-align:left;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:12px 16px;border-bottom:1px solid var(--hairline);white-space:nowrap}
+.dt td{padding:0 16px;height:48px;border-bottom:1px solid var(--hairline-soft);white-space:nowrap}
+.dt tr:last-child td{border-bottom:0}
+.dt tbody tr{transition:background 120ms var(--ease)}
+.dt tbody tr:hover{background:var(--hover)}
+.dt .num{text-align:right}
+.dt .code{color:var(--muted);font-size:12px;margin-left:4px}
+.toast{position:fixed;right:calc(24px + env(safe-area-inset-right,0px));bottom:calc(24px + env(safe-area-inset-bottom,0px));background:#fff;border:1px solid var(--hairline-soft);border-radius:14px;box-shadow:var(--shadow-overlay);padding:12px 12px 12px 16px;display:flex;gap:12px;align-items:center;font-size:14px;z-index:60;max-width:min(440px,calc(100vw - 32px));transform:translateY(8px);opacity:0;pointer-events:none;transition:transform 220ms var(--ease-out),opacity 220ms var(--ease)}
+.toast.show{transform:none;opacity:1;pointer-events:auto}
+.toast svg.lucide{color:var(--ok-fg)}
+.avatar{width:28px;height:28px;border-radius:999px;background:var(--sunken);color:var(--ink);font-size:12px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;flex:none}
+
+/* ---------- Quadro ---------- */
+.board-wrap{overflow-x:auto;overflow-y:hidden;height:440px;padding-bottom:8px}
+.board{display:flex;gap:12px;height:100%;width:max-content}
+.lane{width:288px;flex:none;display:flex;flex-direction:column;min-height:0;background:var(--sunken);border-radius:16px;box-shadow:inset 0 0 0 1px var(--hairline-soft);overflow:hidden}
+.lane-band{height:4px;flex:none}
+.lane-head{display:flex;align-items:flex-start;gap:8px;padding:12px 12px 8px 16px;flex:none}
+.lane-title{flex:1;min-width:0;font-size:14px;font-weight:600;line-height:1.35}
+.lane-title small{display:block;font-size:12px;font-weight:400;color:var(--muted)}
+.pill-count{min-width:28px;height:24px;padding:0 8px;border-radius:999px;background:#fff;box-shadow:var(--shadow-sm);font-size:12px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.lane-body{flex:1;min-height:0;overflow-y:auto;padding:4px 12px 12px;display:flex;flex-direction:column;gap:10px}
+.lane.collapsed{width:56px}
+.lane.collapsed .lane-head{flex-direction:column;align-items:center;padding:12px 0;gap:10px}
+.lane.collapsed .lane-title{writing-mode:vertical-rl;transform:rotate(180deg);font-size:12px;color:var(--muted);flex:none}
+.card{background:#fff;border:1px solid var(--hairline-soft);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:12px;text-align:left;width:100%;color:var(--ink);box-shadow:var(--shadow-card);transition:box-shadow 200ms var(--ease-out),transform 200ms var(--ease-out),border-color 150ms var(--ease)}
+.card:hover{box-shadow:var(--shadow-raised);transform:translateY(-1px)}
+.card-head{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.card-title{font-size:14px;font-weight:600;line-height:1.35}
+.card-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.prog{display:grid;grid-template-columns:1fr 1fr;gap:14px;background:var(--gelo);border-radius:10px;padding:10px 12px}
+.prog .lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px}
+.prog .lbl b{color:var(--ink);font-weight:600}
+.bar{height:4px;background:var(--track);border-radius:999px;overflow:hidden}
+.bar > i{display:block;height:100%;background:var(--mata);border-radius:999px}
+.bar > i.done{background:var(--ok-solid)}
+.quiet{font-size:12px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.quiet svg.lucide{width:14px;height:14px}
+.signals{display:flex;flex-wrap:wrap;gap:6px}
+.card.enter{animation:enter 350ms var(--ease-out) both}
+@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card.flash{animation:flash 1.6s var(--ease) both}
+@keyframes flash{0%,30%{background:var(--mudas-10);border-color:var(--mudas)}100%{background:#fff}}
+
+/* ---------- Densidade ---------- */
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.verdict{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+.verdict.no{color:var(--crit-fg)}.verdict.yes{color:var(--ok-fg)}
+.busy{background:#fff;border:1px solid var(--hairline);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;font-size:12px}
+.busy .t{font-size:14px;font-weight:600}
+.busy .r{display:flex;justify-content:space-between;gap:8px}
+.budget{width:100%;border-collapse:collapse;font-size:14px}
+.budget td{padding:10px 0;border-bottom:1px solid var(--hairline-soft);vertical-align:top}
+.budget td:first-child{font-weight:600;width:200px;padding-right:16px}
+.budget tr:last-child td{border-bottom:0}
+
+/* ---------- Movimento ---------- */
+.motion-demo{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:16px;background:var(--gelo);border-radius:14px}
+.skel{height:14px;border-radius:999px;background:linear-gradient(90deg,var(--sunken) 0%,#F5F8F3 50%,var(--sunken) 100%);background-size:200% 100%;animation:shimmer 1.6s linear infinite}
+@keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+.mtable{width:100%;border-collapse:collapse;font-size:14px}
+.mtable th{text-align:left;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:8px 12px 8px 0;border-bottom:1px solid var(--hairline)}
+.mtable td{padding:10px 12px 10px 0;border-bottom:1px solid var(--hairline-soft);vertical-align:top}
+.mtable tr:last-child td{border-bottom:0}
+
+/* ---------- Dados ---------- */
+.series{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.series div{display:flex;flex-direction:column;gap:6px;font-size:12px}
+.series i{display:block;height:32px;border-radius:8px}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.chart text{font-family:var(--font);font-size:12px;fill:var(--muted)}
+.chart .lbl-strong{fill:var(--ink);font-weight:600}
+.chart rect.b{transition:opacity 120ms var(--ease)}
+.chart:hover rect.b{opacity:.55}
+.chart rect.b:hover{opacity:1}
+.fmt td:first-child{color:var(--muted)}
+
+/* ---------- Ícones ---------- */
+.icons{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:12px}
+.ico{background:#fff;border:1px solid var(--hairline-soft);border-radius:14px;padding:16px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12px;color:var(--muted);text-align:center}
+.ico svg.lucide{width:20px;height:20px;color:var(--ink)}
+.brand-ico{width:48px;height:48px;background:var(--mata);-webkit-mask:var(--src) center/contain no-repeat;mask:var(--src) center/contain no-repeat}
+
+/* ---------- Não faça ---------- */
+.dont{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 24px}
+.dont div{display:grid;grid-template-columns:20px minmax(0,1fr) 20px minmax(0,1fr);gap:8px;align-items:start;padding:10px 0;border-bottom:1px solid var(--hairline-soft);font-size:14px}
+.dont .x{color:var(--crit-fg)}.dont .v{color:var(--ok-fg)}
+
+/* ---------- Responsivo ---------- */
+@media (max-width:1100px){.principles{grid-template-columns:repeat(3,minmax(0,1fr))}.shadows{grid-template-columns:repeat(3,minmax(0,1fr))}.series{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .side{position:sticky;top:0;height:auto;z-index:20;border-right:0;border-bottom:1px solid var(--hairline);flex-direction:row;align-items:center}
+  .brand{padding:12px 12px 12px max(16px,env(safe-area-inset-left,0px));flex:none}
+  .brand span,.side .ver,.side nav .grp{display:none}
+  .side nav{display:flex;gap:4px;overflow-x:auto;padding:8px max(16px,env(safe-area-inset-right,0px)) 8px 4px}
+  .side nav a{flex:none;height:36px}
+  .side nav a svg.lucide{display:none}
+  main{padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .grid2,.grid3,.compare,.kpis,.dont,.motion-demo{grid-template-columns:minmax(0,1fr)}
+  .type-row{grid-template-columns:minmax(0,1fr);gap:4px}
+  .board-wrap{height:400px}
+  .lane{width:80vw}
+}
+@media (max-width:600px){.principles,.shadows{grid-template-columns:repeat(2,minmax(0,1fr))}.series{grid-template-columns:repeat(3,minmax(0,1fr))}.hero h1{font-size:24px}}
+@media (prefers-reduced-motion:reduce){*,::before,::after{transition-duration:.01ms !important;animation-duration:.01ms !important;animation-iteration-count:1 !important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="side" aria-label="Seções do guia">
+    <div class="brand"><img src="../assets/logo/regreen-logo-green.png" alt="re.green"><span>Design system</span></div>
+    <nav id="toc">
+      <div class="grp">Fundamentos</div>
+      <a href="#principios"><i data-lucide="compass"></i>Princípios</a>
+      <a href="#cor"><i data-lucide="palette"></i>Cor</a>
+      <a href="#tipografia"><i data-lucide="type"></i>Tipografia</a>
+      <a href="#forma"><i data-lucide="square-dashed"></i>Forma e profundidade</a>
+      <div class="grp">Interface</div>
+      <a href="#componentes"><i data-lucide="component"></i>Componentes</a>
+      <a href="#quadro"><i data-lucide="columns-3"></i>Quadro</a>
+      <a href="#densidade"><i data-lucide="text"></i>Densidade</a>
+      <a href="#movimento"><i data-lucide="move-right"></i>Movimento</a>
+      <a href="#rolagem"><i data-lucide="mouse"></i>Rolagem</a>
+      <div class="grp">Conteúdo</div>
+      <a href="#dados"><i data-lucide="chart-column"></i>Dados</a>
+      <a href="#icones"><i data-lucide="shapes"></i>Ícones</a>
+      <a href="#nao-faca"><i data-lucide="ban"></i>Não faça</a>
+    </nav>
+    <div class="ver">design.md v1.2 · 05/11/2026</div>
+  </aside>
+
+  <main>
+  <div class="wrap">
+
+    <!-- Princípios -->
+    <section id="principios">
+      <div class="hero">
+        <span class="eyebrow">Interfaces internas</span>
+        <h1>Design system re.green</h1>
+        <p>Guia vivo do design.md. Tudo nesta página é feito com os próprios tokens: passe o mouse, clique e compare. Em conflito, vale a ordem leitura dos dados, acessibilidade, marca e, por último, estética.</p>
+      </div>
+      <div class="principles">
+        <div class="principle"><b>Dados primeiro</b><span>O que não ajuda a decidir sai da tela.</span></div>
+        <div class="principle"><b>Calma e clareza</b><span>Fundo claro, cards brancos, texto neutro. Nada pisca.</span></div>
+        <div class="principle"><b>Um sinal por coisa</b><span>Um dado, uma forma. Um estado, um sinal.</span></div>
+        <div class="principle"><b>Exceção, não normalidade</b><span>Só o que pede atenção vira tag colorida.</span></div>
+        <div class="principle"><b>Marca em detalhes</b><span>Verde Mata pontual. Se a tela parece verde, tem verde demais.</span></div>
+      </div>
+    </section>
+
+    <!-- Cor -->
+    <section id="cor">
+      <div class="sec-head"><span class="eyebrow">Fundamentos</span><h2>Cor</h2><p>Três fundos com papel fixo, texto neutro e a cor da marca em pequenas doses. Clique numa amostra para copiar o hex.</p><span class="ref">design.md §3.1 e §3.2</span></div>
+
+      <div class="panel">
+        <h3>Superfícies</h3>
+        <div class="swatches" data-swatches="gelo:#F4F8F2:Área de trabalho|creme:#FCF2EB:Moldura (sidebar, login)|branco:#FFFFFF:Cards e painéis|sunken:#EBF1E8:Raia, trilho, skeleton|hover:#F2F6F0:Hover sobre branco|track:#DCE5D8:Trilho de progresso"></div>
+        <div>
+          <p class="note" style="margin-bottom:8px">Proporção de referência numa tela de trabalho. O Verde Mata é a fatia fina à direita.</p>
+          <div class="ratio" role="img" aria-label="Proporção aproximada: 18% creme, 42% verde-gelo, 34% branco, 4% tinta, 2% Verde Mata">
+            <div style="flex:18;background:var(--creme);color:var(--muted)">creme</div>
+            <div style="flex:42;background:var(--gelo);color:var(--muted)">verde-gelo</div>
+            <div style="flex:34;background:#fff;color:var(--muted)">branco</div>
+            <div style="flex:4;background:var(--ink)"></div>
+            <div style="flex:2;background:var(--mata)"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="panel">
+          <h3>Tinta</h3>
+          <div class="swatches" data-swatches="ink:#1C2620:Texto e títulos|ink-muted:#56665B:Texto secundário|control:#7F8E83:Borda de campo"></div>
+        </div>
+        <div class="panel">
+          <h3>Marca, pontual</h3>
+          <div class="swatches" data-swatches="mata:#003714:Primário, link, KPI|mudas:#68C153:Marcador, completo|eyebrow:#2D6A1F:Eyebrow|tonal:#C4E0B9:Botão tonal|mudas-10:#EAF6E6:Filtro aplicado"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Status</h3>
+        <p class="note">Texto e ícone usam o tom escuro (fg); o fundo claro (bg) é a tag; o tom cheio (solid) só em barra, ponto ou marcador. Sempre com texto.</p>
+        <div class="row">
+          <span class="tag ok"><i data-lucide="check"></i>No prazo</span>
+          <span class="tag warn"><i data-lucide="clock"></i>Prazo em 3 dias</span>
+          <span class="tag crit"><i data-lucide="circle-alert"></i>7 dias acima do prazo</span>
+          <span class="tag info"><i data-lucide="calendar"></i>DDA prevista em 12/11/2026</span>
+          <span class="tag neutral"><i data-lucide="circle-dashed"></i>Não validado</span>
+          <span class="tag ai"><i data-lucide="sparkles"></i>Lido por IA</span>
+          <span class="tag cat">Mata Atlântica</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Contraste verificado (WCAG AA)</h3>
+        <div style="overflow-x:auto"><table class="contrast">
+          <thead><tr><th>Amostra</th><th>Combinação</th><th class="tnum">Razão</th><th>Uso permitido</th></tr></thead>
+          <tbody>
+            <tr><td><span class="sample" style="background:#fff;color:var(--ink)">Aa texto</span></td><td>Tinta sobre branco</td><td class="tnum">15,6:1</td><td>Qualquer texto</td></tr>
+            <tr><td><span class="sample" style="background:var(--gelo);color:var(--muted)">Aa secundário</span></td><td>Tinta secundária sobre verde-gelo</td><td class="tnum">5,7:1</td><td>Texto secundário</td></tr>
+            <tr><td><span class="sample" style="background:#fff;color:var(--mata)">Aa link</span></td><td>Verde Mata sobre branco</td><td class="tnum">13,5:1</td><td>Link, KPI, item ativo</td></tr>
+            <tr><td><span class="sample" style="background:var(--mudas);color:var(--mata)">Aa botão</span></td><td>Verde Mata sobre Verde das Mudas</td><td class="tnum">6,0:1</td><td>Texto sobre preenchimento verde</td></tr>
+            <tr><td><span class="sample" style="background:#fff;color:var(--mudas)">Aa nunca</span></td><td>Verde das Mudas sobre branco</td><td class="tnum">2,2:1</td><td><span class="tag crit"><i data-lucide="x"></i>Nunca como texto</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </section>
+
+    <!-- Tipografia -->
+    <section id="tipografia">
+      <div class="sec-head"><span class="eyebrow">Fundamentos</span><h2>Tipografia</h2><p>Uma família, Figtree, em quatro pesos. A hierarquia vem de peso e tamanho. Escala fixa de 12 a 32px; nada abaixo de 12px e nenhum zoom global.</p><span class="ref">design.md §3.3</span></div>
+      <div class="panel" style="gap:0">
+        <div class="type-row"><div class="spec"><b>Título de página</b>24 / 1,2 · Bold 700</div><div style="font-size:24px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Quadro de diligência</div></div>
+        <div class="type-row"><div class="spec"><b>Número de KPI</b>32 / 1,2 · SemiBold 600 · Verde Mata</div><div class="tnum" style="font-size:32px;font-weight:600;letter-spacing:-.02em;line-height:1.2;color:var(--mata)">19.971 <span style="font-size:14px;font-weight:500;color:var(--muted);letter-spacing:0">ha</span></div></div>
+        <div class="type-row"><div class="spec"><b>Título de painel</b>20 / 1,3 · Bold 700</div><div style="font-size:20px;font-weight:700;letter-spacing:-.015em;line-height:1.3">Fazenda Bela Aurora (ESM-0023)</div></div>
+        <div class="type-row"><div class="spec"><b>Texto corrido</b>16 / 1,5 · Regular 400</div><div style="font-size:16px;max-width:62ch">Área registrada de 276,90 ha, sem divergência com o CAR. Há hipoteca cedular averbada sem baixa registrada.</div></div>
+        <div class="type-row"><div class="spec"><b>UI padrão</b>14 / 1,5 · Regular · Medium · SemiBold</div><div>Tabela, campo, menu · <span style="font-weight:500">item de menu</span> · <span style="font-weight:600">rótulo e botão</span></div></div>
+        <div class="type-row"><div class="spec"><b>Secundário</b>12 / 1,4 · Regular</div><div style="font-size:12px;color:var(--muted)">Etapas 1 a 8 · atualizado às 14:32</div></div>
+        <div class="type-row"><div class="spec"><b>Eyebrow</b>12 · SemiBold · caixa alta · 0,06em</div><div><span class="eyebrow">Acima do prazo</span></div></div>
+      </div>
+    </section>
+
+    <!-- Forma -->
+    <section id="forma">
+      <div class="sec-head"><span class="eyebrow">Fundamentos</span><h2>Forma e profundidade</h2><p>Raios concêntricos: o de dentro é menor que o de fora. Sombra suave em verde difuso, nunca preta, em cinco níveis.</p><span class="ref">design.md §3.5</span></div>
+      <div class="panel">
+        <h3>Raios</h3>
+        <div class="radii">
+          <div class="radius" style="border-radius:999px"><b>Pílula</b>botão, tag, chip</div>
+          <div class="radius" style="border-radius:16px"><b>16px</b>painel, KPI, raia</div>
+          <div class="radius" style="border-radius:14px"><b>14px</b>card, toast</div>
+          <div class="radius" style="border-radius:12px"><b>12px</b>campo, menu</div>
+          <div class="radius" style="border-radius:10px"><b>10px</b>bloco interno</div>
+          <div class="radius" style="border-radius:4px"><b>4px</b>checkbox</div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Níveis de sombra</h3>
+        <div class="shadows">
+          <div class="shadow" style="background:var(--sunken)"><b>0</b>raia, bloco</div>
+          <div class="shadow" style="box-shadow:var(--shadow-sm)"><b>1 · sm</b>botão, chip</div>
+          <div class="shadow" style="box-shadow:var(--shadow-card)"><b>2 · card</b>card, painel</div>
+          <div class="shadow" style="box-shadow:var(--shadow-raised)"><b>3 · raised</b>hover</div>
+          <div class="shadow" style="box-shadow:var(--shadow-overlay)"><b>4 · overlay</b>drawer, toast</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Componentes -->
+    <section id="componentes">
+      <div class="sec-head"><span class="eyebrow">Interface</span><h2>Componentes</h2><p>Base shadcn/ui configurada pelos tokens. Uma ação primária por área; as demais ficam mais leves.</p><span class="ref">design.md §9</span></div>
+
+      <div class="panel">
+        <h3>Botões</h3>
+        <div class="row">
+          <button class="btn btn-primary"><i data-lucide="plus"></i>Adicionar terra</button>
+          <button class="btn btn-tonal"><i data-lucide="download"></i>Exportar</button>
+          <button class="btn btn-outline">Cancelar</button>
+          <button class="btn btn-ghost"><i data-lucide="pencil"></i>Corrigir</button>
+          <button class="btn btn-danger"><i data-lucide="trash-2"></i>Excluir 3 tarefas</button>
+          <button class="btn btn-outline" disabled title="Selecione ao menos uma terra">Mover</button>
+          <button class="icon-btn" aria-label="Mais ações" title="Mais ações"><i data-lucide="more-horizontal"></i></button>
+        </div>
+        <p class="note">Primária: uma por área. Tonal: ação frequente ao lado da primária. Destrutiva: só dentro da confirmação. Pressionar reduz para 98%.</p>
+      </div>
+
+      <div class="grid2">
+        <div class="panel">
+          <h3>Controle segmentado e filtros</h3>
+          <div class="row">
+            <div class="seg" role="group" aria-label="Visualização" data-seg><span class="thumb" aria-hidden="true"></span><button aria-pressed="true"><i data-lucide="columns-3"></i>Quadro</button><button aria-pressed="false"><i data-lucide="list"></i>Lista</button><button aria-pressed="false"><i data-lucide="map"></i>Mapa</button></div>
+          </div>
+          <div class="row">
+            <button class="chip-f"><i data-lucide="map-pin"></i>Estado<i data-lucide="chevron-down"></i></button>
+            <button class="chip-f active" id="chipActive">Acima do prazo<i data-lucide="x"></i></button>
+          </div>
+          <p class="note">Opção ativa é um chip branco que desliza. Filtro aplicado em verde-claro, removível pelo X.</p>
+        </div>
+        <div class="panel">
+          <h3>Campos</h3>
+          <div class="search" role="search"><i data-lucide="search"></i><label class="sr-only" for="s1">Buscar terra</label><input id="s1" placeholder="Buscar terra"></div>
+          <div class="grid2" style="gap:12px">
+            <div class="field"><label for="f1">Área <small>(opcional)</small></label><input id="f1" placeholder="0,00 ha" inputmode="decimal"><span class="help">Use vírgula para decimais.</span></div>
+            <div class="field error"><label for="f2">Data de assinatura</label><input id="f2" value="31/02/2026" aria-invalid="true" aria-describedby="f2e"><span class="help" id="f2e"><i data-lucide="circle-alert"></i>Data inexistente. Use dd/mm/aaaa.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Indicadores</h3>
+        <div class="kpis">
+          <div class="kpi"><span class="eyebrow">Em diligência</span><span class="value tnum">19<small>terras</small></span><span class="ctx tnum">Etapas 1 a 8 · 19.971 ha</span></div>
+          <button class="kpi" id="kpiDemo" aria-pressed="false" title="Filtrar"><i class="go" data-lucide="arrow-up-right"></i><span class="eyebrow">Acima do prazo</span><span class="value tnum">8<small>de 19</small></span><span class="ctx" style="color:var(--crit-fg)">Prazo definido por etapa</span></button>
+          <div class="kpi"><span class="eyebrow">Tempo na etapa</span><span class="value tnum">18<small>dias, mediana</small></span><span class="ctx tnum">P90 34 dias · 19 terras</span></div>
+        </div>
+        <p class="note">KPI clicável filtra a lista correspondente. Vermelho só aparece quando há referência (prazo, meta).</p>
+      </div>
+
+      <div class="panel">
+        <h3>Abas e tabela</h3>
+        <div class="tabs" role="tablist" aria-label="Seções da terra"><button class="tab" role="tab" aria-selected="true">Resumo</button><button class="tab" role="tab" aria-selected="false">Documentos</button><button class="tab" role="tab" aria-selected="false">Diligências</button><button class="tab" role="tab" aria-selected="false">Histórico</button></div>
+        <div class="table-wrap"><table class="dt">
+          <thead><tr><th>Terra</th><th class="num">Área (ha)</th><th>Município</th><th aria-sort="descending">Tempo na etapa</th><th>Escritório</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#quadro">Fazenda Bela Aurora</a><span class="code">ESM-0023</span></td><td class="num">276,90</td><td>Aracruz, ES</td><td><span class="tag crit"><i data-lucide="circle-alert"></i>3 dias acima do prazo</span></td><td>Escritório Delta</td></tr>
+            <tr><td><a href="#quadro">Fazenda Serra Azul</a><span class="code">MGJ-0051</span></td><td class="num">1.204,40</td><td>Almenara, MG</td><td><span class="quiet">14 dias na etapa</span></td><td>Escritório Alfa</td></tr>
+            <tr><td><a href="#quadro">Fazenda Lagoa Seca</a><span class="code">SBA-0061</span></td><td class="num">530,00</td><td>Prado, BA</td><td><span class="tag warn"><i data-lucide="clock"></i>Prazo em 6 dias</span></td><td>Escritório Beta</td></tr>
+          </tbody>
+        </table></div>
+        <p class="note">Sem zebra, cabeçalho neutro, número à direita com unidade no cabeçalho, nome + código sempre.</p>
+      </div>
+
+      <div class="panel">
+        <h3>Feedback</h3>
+        <div class="row">
+          <button class="btn btn-outline" id="toastBtn"><i data-lucide="bell"></i>Mostrar toast com Desfazer</button>
+          <span class="quiet" id="saveDemo" aria-live="polite"><i data-lucide="check"></i>Salvo às 14:32</span>
+          <button class="btn btn-ghost btn-sm" id="saveBtn">Simular salvamento</button>
+        </div>
+        <p class="note">"Salvando…" só aparece se demorar mais de 300ms. O toast some em 5s e pausa com o mouse em cima.</p>
+      </div>
+    </section>
+
+    <!-- Quadro -->
+    <section id="quadro">
+      <div class="sec-head"><span class="eyebrow">Interface</span><h2>Quadro</h2><p>Raias rebaixadas em verde-gelo, cards brancos por cima. Faixa de 4px no topo com a rampa do Verde Mata, da primeira à última etapa. Raia vazia nasce recolhida.</p><span class="ref">design.md §9 Quadro e §3.7</span></div>
+      <div class="panel" style="padding:16px">
+        <div class="board-wrap" id="board"><div class="board" id="boardInner"></div></div>
+      </div>
+    </section>
+
+    <!-- Densidade -->
+    <section id="densidade">
+      <div class="sec-head"><span class="eyebrow">Interface</span><h2>Densidade</h2><p>Pouco texto por área de atenção. O normal aparece discreto ou some; só a exceção vira sinal. Refinamento vem de tirar texto, não de diminuir a letra.</p><span class="ref">design.md §7</span></div>
+      <div class="compare">
+        <div class="panel">
+          <span class="verdict no"><i data-lucide="x"></i>Antes: tudo é sinal</span>
+          <div class="busy">
+            <span class="t">Fazenda Cristal (ESM-0034)</span>
+            <div class="r"><span>Área: 366,20 ha</span><span>Município: Pinheiros, ES</span></div>
+            <div class="r"><span>Básicos: 9/9 (100%)</span><span>Certidões: 12/12 (100%)</span></div>
+            <div class="row"><span class="tag ok">DDA recebida</span><span class="tag ok">DDL recebida</span><span class="tag ok">8 dias na etapa</span><span class="tag ok">Novo</span></div>
+            <div class="r"><span>Escritório: Escritório Delta</span><span>Responsável: Paula Lima</span></div>
+          </div>
+          <p class="note">Rótulos repetidos, quatro tags verdes que dizem "está tudo bem" e o mesmo dado em fração e percentual.</p>
+        </div>
+        <div class="panel">
+          <span class="verdict yes"><i data-lucide="check"></i>Depois: exceção primeiro</span>
+          <div class="card" style="box-shadow:var(--shadow-card)">
+            <div class="card-head"><div><p class="card-title">Fazenda Cristal <span class="muted" style="font-weight:400">ESM-0034</span></p><div class="card-sub tnum">366,20 ha · Pinheiros, ES</div></div><span class="avatar" title="Escritório: Escritório Delta">D</span></div>
+            <div class="prog"><div><div class="lbl"><span>Básicos</span><b class="tnum">9/9</b></div><div class="bar"><i class="done" style="width:100%"></i></div></div><div><div class="lbl"><span>Certidões</span><b class="tnum">12/12</b></div><div class="bar"><i class="done" style="width:100%"></i></div></div></div>
+            <span class="quiet"><i data-lucide="clock"></i>8 dias na etapa</span>
+          </div>
+          <p class="note">Zero tags: nada pede atenção. O detalhe completo fica no painel lateral.</p>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Orçamento de texto</h3>
+        <table class="budget">
+          <tr><td>Card de quadro</td><td>Nome + código · 1 linha de contexto · 1 bloco de progresso · até 2 sinais de exceção (ou 1 linha discreta)</td></tr>
+          <tr><td>KPI</td><td>Eyebrow de até 3 palavras · número + unidade · 1 linha de contexto de até 6 palavras</td></tr>
+          <tr><td>Cabeçalho de raia</td><td>Título + contagem + 1 número. Prazos e regras vão para o tooltip</td></tr>
+          <tr><td>Rótulo e tag</td><td>Rótulo até 3 palavras, tag até 4; nada repetido em cada card</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- Movimento -->
+    <section id="movimento">
+      <div class="sec-head"><span class="eyebrow">Interface</span><h2>Movimento</h2><p>Movimento explica o que mudou e de onde veio. Calmo, curto, sem bounce. Com "reduzir movimento" ativado no sistema, tudo vira instantâneo.</p><span class="ref">design.md §3.6</span></div>
+      <div class="panel">
+        <div class="row">
+          <button class="btn btn-outline btn-sm" id="replay"><i data-lucide="rotate-ccw"></i>Reproduzir entrada</button>
+          <button class="btn btn-outline btn-sm" id="flashBtn"><i data-lucide="locate-fixed"></i>Destacar item movido</button>
+          <span class="note">Passe o mouse nos cards: sobem 1px.</span>
+        </div>
+        <div class="motion-demo" id="motionDemo"></div>
+        <div style="display:flex;flex-direction:column;gap:8px;max-width:360px"><span class="note">Skeleton de carregamento</span><div class="skel" style="width:70%"></div><div class="skel" style="width:90%"></div><div class="skel" style="width:50%"></div></div>
+      </div>
+      <div class="panel">
+        <h3>Catálogo</h3>
+        <div style="overflow-x:auto"><table class="mtable">
+          <thead><tr><th>Interação</th><th>Movimento</th><th>Tempo</th></tr></thead>
+          <tbody>
+            <tr><td>Hover de card</td><td>Sobe 1px, sombra card → raised</td><td class="tnum">200ms</td></tr>
+            <tr><td>Pressionar botão</td><td>Escala 98%</td><td class="tnum">150ms</td></tr>
+            <tr><td>Entrada de cards</td><td>Fade + 8px, escalonado 30ms (máx. 8)</td><td class="tnum">350ms</td></tr>
+            <tr><td>Segmentado</td><td>Chip branco desliza</td><td class="tnum">220ms</td></tr>
+            <tr><td>Drawer</td><td>Entra pela direita; scrim em fade</td><td class="tnum">280ms</td></tr>
+            <tr><td>Toast</td><td>Sobe 8px + fade; pausa no hover</td><td class="tnum">220ms</td></tr>
+            <tr><td>Item movido</td><td>Rola até ele e pisca verde-claro</td><td class="tnum">1,6s</td></tr>
+            <tr><td>Arrastar card</td><td>Sombra overlay; raia destino acende; auto-rolagem a 140px da borda</td><td class="tnum">contínuo</td></tr>
+            <tr><td>Número de KPI</td><td>Troca direta. Nunca contagem animada</td><td class="tnum">0–120ms</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </section>
+
+    <!-- Rolagem -->
+    <section id="rolagem">
+      <div class="sec-head"><span class="eyebrow">Interface</span><h2>Rolagem</h2><p>Em telas de trabalho a página fica parada e só o conteúdo rola. No quadro acima: rolagem horizontal no quadro, vertical dentro de cada raia, com a barra fina que só aparece na raia quando o mouse passa.</p><span class="ref">design.md §3.7</span></div>
+      <div class="grid2">
+        <div class="panel">
+          <h3>Barra global</h3>
+          <div style="height:140px;overflow-y:auto;background:var(--gelo);border-radius:10px;padding:12px;font-size:14px" tabindex="0" aria-label="Exemplo de área rolável">
+            <p>Fina, trilho transparente, polegar arredondado com 16% de Verde Mata, que escurece para 30% no hover.</p><br><p>Use em qualquer área que role. Nunca a barra grossa padrão do sistema.</p><br><p>Role esta caixa para ver a barra.</p><br><p>Fim do exemplo.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Listas internas · .scroll-quiet</h3>
+          <div class="scroll-quiet" style="height:140px;overflow-y:auto;background:var(--gelo);border-radius:10px;padding:12px;font-size:14px" tabindex="0" aria-label="Exemplo de lista com barra discreta">
+            <p>A barra fica invisível até o mouse passar ou o foco entrar.</p><br><p>Não use scrollbar-hide: a pessoa precisa perceber que há mais conteúdo.</p><br><p>Passe o mouse aqui.</p><br><p>Fim do exemplo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dados -->
+    <section id="dados">
+      <div class="sec-head"><span class="eyebrow">Conteúdo</span><h2>Dados</h2><p>Formato brasileiro em tudo, unidade sempre visível, mediana em vez de média para durações. Gráficos com cores em ordem fixa e vermelho reservado.</p><span class="ref">design.md §5 e §12</span></div>
+      <div class="grid2">
+        <div class="panel">
+          <h3>Formatos (format.ts)</h3>
+          <table class="budget fmt">
+            <tr><td>Área</td><td class="tnum">2.342,80 ha</td></tr>
+            <tr><td>Moeda</td><td class="tnum">R$ 1.000,00 · KPI R$ 1,2 mi</td></tr>
+            <tr><td>Percentual</td><td class="tnum">27,8%</td></tr>
+            <tr><td>Data</td><td class="tnum">05/11/2026 · nov/2026</td></tr>
+            <tr><td>Duração</td><td class="tnum">Mediana 18 dias · P90 34 dias · 19 terras</td></tr>
+            <tr><td>Entidade</td><td>Fazenda Boa Vista (SBA-0012)</td></tr>
+            <tr><td>Vazio</td><td>—</td></tr>
+          </table>
+        </div>
+        <div class="panel">
+          <h3>Cores de série, em ordem</h3>
+          <div class="series">
+            <div><i style="background:#003714"></i>1 · Verde Mata</div>
+            <div><i style="background:#68C153"></i>2 · Mudas</div>
+            <div><i style="background:#419BDC"></i>3 · Azul</div>
+            <div><i style="background:#DF8435"></i>4 · Laranja</div>
+            <div><i style="background:#AFA5F5"></i>5 · Lavanda</div>
+            <div><i style="background:#F0D23C"></i>6 · Amarelo</div>
+            <div><i style="background:#CCD7D0"></i>Outros</div>
+          </div>
+          <p class="note">Mais de 6 categorias viram "Outros". Amarelo e lavanda só em área larga e sempre com rótulo. Vermelho nunca é série.</p>
+        </div>
+      </div>
+      <div class="panel chart">
+        <span class="eyebrow">Hectares contratados por mês</span>
+        <h3>Contratação de 2026 está abaixo da meta mensal desde julho</h3>
+        <div id="chart"></div>
+        <p class="note">Barras retas, uma cor, linha de meta tracejada com rótulo, destaque só no mês atual. Fonte: dados fictícios para demonstração.</p>
+      </div>
+    </section>
+
+    <!-- Ícones -->
+    <section id="icones">
+      <div class="sec-head"><span class="eyebrow">Conteúdo</span><h2>Ícones</h2><p>Interface com Lucide em traço 1,75, 16px em botão e 20px na navegação. Um ícone por conceito. Os 7 ícones da marca são ilustração para estados vazios e boas-vindas.</p><span class="ref">design.md §13</span></div>
+      <div class="panel">
+        <h3>Lucide, um por conceito</h3>
+        <div class="icons" id="lucideIcons"></div>
+      </div>
+      <div class="panel">
+        <h3>Ícones da marca</h3>
+        <div class="icons" id="brandIcons"></div>
+      </div>
+    </section>
+
+    <!-- Não faça -->
+    <section id="nao-faca">
+      <div class="sec-head"><span class="eyebrow">Conteúdo</span><h2>Não faça</h2><p>Os erros mais comuns e o que usar no lugar.</p><span class="ref">design.md §18</span></div>
+      <div class="panel"><div class="dont" id="dont"></div></div>
+    </section>
+
+  </div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const icons = () => window.lucide && lucide.createIcons({attrs:{'stroke-width':1.75}});
+
+/* Amostras de cor com cópia do hex */
+document.querySelectorAll('[data-swatches]').forEach(box=>{
+  box.innerHTML = box.dataset.swatches.split('|').map(s=>{
+    const [n,h,u] = s.split(':');
+    return `<button class="sw" data-hex="${h}" title="Copiar ${h}"><span class="chip" style="background:${h}"></span><span class="meta"><b>${n}</b><span class="mono">${h}</span><small>${u}</small></span></button>`;
+  }).join('');
+});
+document.addEventListener('click', e=>{
+  const sw = e.target.closest('.sw'); if(!sw) return;
+  const hex = sw.dataset.hex;
+  const done = ()=>toast(`${hex} copiado.`);
+  try{ navigator.clipboard.writeText(hex).then(done, ()=>toast(`Copie manualmente: ${hex}`)); }catch{ toast(`Copie manualmente: ${hex}`); }
+});
+
+/* Toast */
+let tt;
+function toast(msg, undo){
+  const t = document.getElementById('toast');
+  t.innerHTML = `<i data-lucide="circle-check"></i><span>${msg}</span>${undo?'<button class="btn btn-ghost btn-sm" id="undo">Desfazer</button>':''}`;
+  icons(); t.classList.add('show');
+  if(undo) document.getElementById('undo').onclick = ()=>{ t.classList.remove('show'); toast('Ação desfeita.'); };
+  const arm = ()=>{ clearTimeout(tt); tt = setTimeout(()=>t.classList.remove('show'), 5000); };
+  t.onmouseenter = ()=>clearTimeout(tt); t.onmouseleave = arm; arm();
+}
+document.getElementById('toastBtn').onclick = ()=>toast('Fazenda Boa Vista movida para "2. Aguardando documentos básicos".', true);
+document.getElementById('saveBtn').onclick = ()=>{
+  const s = document.getElementById('saveDemo');
+  const spin = setTimeout(()=>{ s.innerHTML='<i data-lucide="loader"></i>Salvando…'; icons(); }, 300);
+  setTimeout(()=>{ clearTimeout(spin); const d=new Date(); s.innerHTML=`<i data-lucide="check"></i>Salvo às ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; icons(); }, 1200);
+};
+document.getElementById('kpiDemo').onclick = e=>{ const b=e.currentTarget; b.setAttribute('aria-pressed', b.getAttribute('aria-pressed')!=='true'); };
+document.getElementById('chipActive').onclick = e=>e.currentTarget.classList.toggle('active');
+
+/* Segmentado com chip deslizante */
+function placeThumbs(){ document.querySelectorAll('[data-seg]').forEach(seg=>{ const on=seg.querySelector('button[aria-pressed=true]'), th=seg.querySelector('.thumb'); if(on&&th){ th.style.width=on.offsetWidth+'px'; th.style.transform=`translateX(${on.offsetLeft}px)`; } }); }
+document.querySelectorAll('[data-seg] button').forEach(b=>b.addEventListener('click', ()=>{ b.parentElement.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x===b)); placeThumbs(); }));
+document.querySelectorAll('[role=tablist]').forEach(tl=>tl.addEventListener('click', e=>{ const t=e.target.closest('[role=tab]'); if(!t) return; tl.querySelectorAll('[role=tab]').forEach(x=>x.setAttribute('aria-selected', x===t)); }));
+
+/* Quadro de exemplo */
+const fmtA = v => new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v)+' ha';
+const C = (name,code,area,city,b,c,sig,av) => ({name,code,area,city,b,c,sig,av});
+const lanes = [
+  {t:'1. Triagem documentos básicos', band:'#CCD7D0', cards:[C('Fazenda Boa Vista','SBA-0012',320.5,'Itabela, BA',[2,9],[0,12],null,null),C('Fazenda Santa Clara','SBA-0031',1180.25,'Porto Seguro, BA',[5,9],[0,12],['warn','clock','Prazo em 3 dias'],null)]},
+  {t:'2. Aguardando documentos básicos', band:'#B3C5B9', cards:[C('Fazenda Três Barras','ESM-0019',642,'Sooretama, ES',[7,9],[2,12],['crit','circle-alert','7 dias acima do prazo'],null),C('Sítio Água Limpa','ESM-0007',88.4,'Linhares, ES',[6,9],[1,12],null,null),C('Fazenda Recanto Verde','MGJ-0044',415.75,'Teófilo Otoni, MG',[4,9],[0,12],null,null)]},
+  {t:'3. Emissão de certidões', band:'#99AFA1', cards:[C('Fazenda Cachoeira Alta','SBA-0040',2342.8,'Eunápolis, BA',[9,9],[7,12],null,'EA'),C('Fazenda Pau d’Alho','SBA-0052',903.1,'Belmonte, BA',[9,9],[4,12],['crit','circle-alert','11 dias acima do prazo'],'EB'),C('Fazenda Ouro Fino','PAP-0003',1550,'Paragominas, PA',[8,9],[2,12],['warn','calendar','DDA vence em 5 dias'],'EG')]},
+  {t:'On Hold', band:'#C9CFCB', collapsed:true, cards:[1,2]},
+  {t:'4. Em auditoria / Escritório externo', band:'#80A08A', cards:[C('Fazenda Bela Aurora','ESM-0023',276.9,'Aracruz, ES',[9,9],[12,12],['crit','circle-alert','DDL atrasada 5 dias'],'ED')]},
+  {t:'5. Recebimento DDL preliminar', band:'#668772', cards:[]},
+];
+function cardHtml(c, anim, i){
+  const pct = a => Math.round(a[0]/a[1]*100);
+  return `<div class="card${anim?' enter':''}" ${anim?`style="animation-delay:${Math.min(i,8)*30}ms"`:''} tabindex="0" data-code="${c.code}">
+    <div class="card-head"><div style="min-width:0"><p class="card-title">${c.name} <span class="muted" style="font-weight:400">${c.code}</span></p><div class="card-sub tnum">${fmtA(c.area)} · ${c.city}</div></div>${c.av?`<span class="avatar" title="Escritório">${c.av}</span>`:''}</div>
+    <div class="prog"><div><div class="lbl"><span>Básicos</span><b class="tnum">${c.b[0]}/${c.b[1]}</b></div><div class="bar"><i class="${c.b[0]===c.b[1]?'done':''}" style="width:${pct(c.b)}%"></i></div></div><div><div class="lbl"><span>Certidões</span><b class="tnum">${c.c[0]}/${c.c[1]}</b></div><div class="bar"><i class="${c.c[0]===c.c[1]?'done':''}" style="width:${pct(c.c)}%"></i></div></div></div>
+    ${c.sig?`<div class="signals"><span class="tag ${c.sig[0]}"><i data-lucide="${c.sig[1]}"></i>${c.sig[2]}</span></div>`:`<span class="quiet"><i data-lucide="clock"></i>No prazo da etapa</span>`}
+  </div>`;
+}
+let idx = 0;
+document.getElementById('boardInner').innerHTML = lanes.map(l=>{
+  const collapsed = l.collapsed || l.cards.length===0;
+  const area = Array.isArray(l.cards) && typeof l.cards[0]==='object' ? l.cards.reduce((a,c)=>a+c.area,0) : 0;
+  return `<section class="lane ${collapsed?'collapsed':''}" aria-label="${l.t}, ${l.cards.length} terras">
+    <div class="lane-band" style="background:${l.band}"></div>
+    <header class="lane-head">${collapsed?'<i data-lucide="chevron-right" style="color:var(--muted)"></i>':''}<h4 class="lane-title" style="margin:0">${l.t}${!collapsed&&area?`<small class="tnum">${new Intl.NumberFormat('pt-BR').format(Math.round(area))} ha</small>`:''}</h4><span class="pill-count tnum">${l.cards.length}</span></header>
+    ${collapsed?'':`<div class="lane-body scroll-quiet">${l.cards.map(c=>cardHtml(c,true,idx++)).join('')}</div>`}
+  </section>`;
+}).join('');
+document.getElementById('board').addEventListener('wheel', e=>{
+  if(e.target.closest('.lane-body') || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+  e.currentTarget.scrollLeft += e.deltaY; e.preventDefault();
+}, {passive:false});
+
+/* Movimento */
+const demoCards = [C('Fazenda Esperança','SBA-0071',1033.5,'Guaratinga, BA',[9,9],[12,12],null,'EB'),C('Fazenda Campo Belo','PAP-0011',2210,'Ipixuna do Pará, PA',[9,9],[12,12],['crit','circle-alert','8 dias acima do prazo'],'EG'),C('Fazenda Jequitibá','SBA-0075',1489.9,'Itabela, BA',[9,9],[12,12],null,'EA')];
+const renderMotion = anim => { document.getElementById('motionDemo').innerHTML = demoCards.map((c,i)=>cardHtml(c,anim,i)).join(''); icons(); };
+renderMotion(false);
+document.getElementById('replay').onclick = ()=>renderMotion(true);
+document.getElementById('flashBtn').onclick = ()=>{ const el=document.querySelector('#motionDemo .card:nth-child(2)'); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); };
+
+/* Gráfico: barras com linha de meta */
+(function(){
+  const meses=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov'];
+  const vals=[820,940,1010,1180,1260,1150,870,760,690,640,410];
+  const meta=1000, W=720, H=240, padL=48, padB=28, padT=16, padR=72, max=1400;
+  const iw=W-padL-padR, ih=H-padT-padB, bw=iw/vals.length;
+  const y=v=>padT+ih-(v/max)*ih;
+  const nf=new Intl.NumberFormat('pt-BR');
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Hectares contratados por mês em 2026. Meta mensal de 1.000 ha. Abaixo da meta de julho a novembro.">`;
+  [0,500,1000].forEach(t=>{ s+=`<line x1="${padL}" x2="${W-padR}" y1="${y(t)}" y2="${y(t)}" stroke="${t===0?'rgba(16,56,29,.25)':'#E4D9CF'}" stroke-width="1" ${t===0?'':'stroke-dasharray="2 4"'} fill="none"/><text x="${padL-8}" y="${y(t)+4}" text-anchor="end">${nf.format(t)}</text>`; });
+  vals.forEach((v,i)=>{
+    const x=padL+i*bw+bw*.2, w=bw*.6, cur=i===vals.length-1;
+    s+=`<rect class="b" x="${x}" y="${y(v)}" width="${w}" height="${ih-(y(v)-padT)}" fill="${cur?'#003714':'#99AFA1'}"><title>${meses[i]}/2026: ${nf.format(v)} ha</title></rect>`;
+    s+=`<text x="${x+w/2}" y="${H-8}" text-anchor="middle">${meses[i]}</text>`;
+    if(cur) s+=`<text class="lbl-strong" x="${x+w/2}" y="${y(v)-8}" text-anchor="middle">${nf.format(v)} ha</text>`;
+  });
+  s+=`<line x1="${padL}" x2="${W-padR}" y1="${y(meta)}" y2="${y(meta)}" stroke="#003714" stroke-width="1.5" stroke-dasharray="6 4" fill="none"/><text class="lbl-strong" x="${W-padR+8}" y="${y(meta)+4}">Meta 1.000</text>`;
+  document.getElementById('chart').innerHTML = s+'</svg>';
+})();
+
+/* Ícones */
+const luc=[['map-pin','Localização'],['calendar','Data, prazo'],['clock','Tempo na etapa'],['circle-alert','Atraso, erro'],['check','Concluído'],['sparkles','Gerado por IA'],['arrow-up-right','Vai para outra tela'],['external-link','Sai do app'],['download','Exportar'],['building-2','Escritório'],['scale','Jurídico (DDL)'],['trees','Ambiental (DDA)']];
+document.getElementById('lucideIcons').innerHTML = luc.map(([n,l])=>`<div class="ico"><i data-lucide="${n}"></i>${l}</div>`).join('');
+const brand=['jequitiba','pau-brasil','sapopema','tucano','lupa','pasta','relogio'];
+const brandNames={jequitiba:'jequitibá','pau-brasil':'pau-brasil',sapopema:'sapopema',tucano:'tucano',lupa:'lupa',pasta:'pasta',relogio:'relógio'};
+document.getElementById('brandIcons').innerHTML = brand.map(b=>`<div class="ico"><span class="brand-ico" style="--src:url('../assets/icons/${b}.svg')" role="img" aria-label="Ícone ${brandNames[b]}"></span>${brandNames[b]}</div>`).join('');
+
+/* Não faça */
+const dont=[['Sidebar ou chip ativo em Verde Mata cheio','Sidebar creme, chip branco elevado'],['Título e texto em Verde Mata','Tinta neutra; Verde Mata pontual'],['zoom global ou texto de 11px','Escala 12 a 32px e menos texto'],['Tag verde para estado normal','Normal discreto; tag só na exceção'],['Página rolando junto com as colunas','Página parada; quadro e raias rolam'],['Barra de rolagem escondida','Barra fina; .scroll-quiet no hover'],['Arco-íris de cores por etapa','Rampa do Verde Mata na faixa da raia'],['Sombra preta ou card dentro de card','Sombra verde difusa; bloco rebaixado'],['Status só por cor','Tag com ícone e texto'],['Média de durações sem amostra','Mediana, P90 e n'],['Só o código da entidade','Nome + código, nome como link'],['Pizza cheia, 3D, linha suavizada','Anel com até 5 fatias, linha reta'],['Pulsar, flutuar, contar números','Movimentos do catálogo, ou nada'],['Emoji ou ✓ ⚠ como ícone','Lucide em traço 1,75']];
+document.getElementById('dont').innerHTML = dont.map(([n,y])=>`<div><i class="x" data-lucide="x"></i><span>${n}</span><i class="v" data-lucide="check"></i><span>${y}</span></div>`).join('');
+
+/* Navegação: o clique define o item ativo; a rolagem manual atualiza depois.
+   Durante a rolagem disparada pelo clique, o destaque fica travado no item clicado. */
+const links=[...document.querySelectorAll('#toc a')];
+const sections=[...document.querySelectorAll('main section')];
+const toc=document.getElementById('toc');
+let lockUntil=0, current='';
+function setActive(id){
+  if(id===current) return;
+  current=id;
+  links.forEach(a=>a.setAttribute('aria-current', a.getAttribute('href')==='#'+id ? 'true' : 'false'));
+  const a=links.find(a=>a.getAttribute('href')==='#'+id);
+  if(a && toc.scrollWidth>toc.clientWidth){ /* faixa horizontal no celular: centraliza o item sem mexer na página */
+    toc.scrollTo({left:a.offsetLeft-(toc.clientWidth-a.offsetWidth)/2, behavior:'smooth'});
+  }
+}
+function headerOffset(){ return window.innerWidth<=900 ? document.querySelector('.side').offsetHeight+16 : 24; }
+function activeFromScroll(){
+  if(Date.now()<lockUntil) return;
+  const line=headerOffset()+80;
+  let id=sections[0].id;
+  for(const s of sections){ if(s.getBoundingClientRect().top<=line) id=s.id; }
+  if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4) id=sections[sections.length-1].id;
+  setActive(id);
+}
+links.forEach(a=>a.addEventListener('click', e=>{
+  e.preventDefault();
+  const id=a.getAttribute('href').slice(1), s=document.getElementById(id);
+  if(!s) return;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  lockUntil=Date.now()+(reduce?100:1200);
+  setActive(id);
+  const target=Math.round(s.getBoundingClientRect().top+window.scrollY-headerOffset());
+  window.scrollTo({top:target, behavior:reduce?'auto':'smooth'});
+  /* Se a rolagem suave não andar (alguns visualizadores a bloqueiam), salta direto */
+  setTimeout(()=>{ if(Math.abs(window.scrollY-target)>4 && window.scrollY<document.documentElement.scrollHeight-window.innerHeight-4) window.scrollTo({top:target}); }, 1000);
+  try{ history.replaceState(null,'','#'+id); }catch{}
+}));
+window.addEventListener('scroll', activeFromScroll, {passive:true});
+window.addEventListener('scrollend', ()=>{ lockUntil=0; });
+const startId=location.hash.slice(1);
+if(startId && document.getElementById(startId)){ setActive(startId); lockUntil=Date.now()+300; setTimeout(()=>window.scrollTo({top:document.getElementById(startId).getBoundingClientRect().top+window.scrollY-headerOffset()}), 0); }
+else setActive(sections[0].id);
+
+icons(); placeThumbs();
+document.fonts?.ready.then(placeThumbs);
+window.addEventListener('resize', placeThumbs);
+</script>
+</body>
+</html>
